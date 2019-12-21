@@ -1,0 +1,121 @@
+
+.legend {
+    position: absolute;
+    bottom: 300px;
+    left: 88%;
+    background-color: white;
+    width: 150px;
+    height: 200px;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor:pointer;
+}
+.legend span {
+    color: #419ADA;
+    font-weight: bold;
+    position: relative;
+    bottom: 14px;
+    left: 32%;
+}
+.legend .nitro {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend .nitro::before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #ED4F4F;
+}
+
+.legend .phosporus {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+
+}
+.legend .phosporus::before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #4CF07A;
+}
+
+.legend .potassium {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+
+}
+.legend .potassium::before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #1A0CBB;
+}
+
+.legend .iron {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend .iron::before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #FF21C1;
+}
+
+.legend .zinc {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend .zinc::before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #756767;
+}
+
+.legend .copper {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend .copper::before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color:#C1DA28;
+}
+
+
+
+/* <div class="nitro">Nitrogen</div>
+<div class="phosporus">Phosporus</div>
+<div class="potassium">Potassium</div>
+<div class="iron">Iron</div>
+<div class="zinc">Zinc</div>
+<div class="copper">Copper</div>
+</div> */

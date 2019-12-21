@@ -5,8 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+    <link rel="stylesheet" href="legend.css">
+    <script src="https://js.arcgis.com/4.13/"></script>
+    <style>
+        html, body, #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        }
+        #viewDiv {
+            height: 68%;
+        }
+    </style>
 </head>
 <body>
-    <div>Initial Commit</div>
+    <div id="viewDiv"></div>
+    <div class="legend">
+        <span>Legend</span>
+        <div class="nitro">Nitrogen</div>
+        <div class="phosporus">Phosporus</div>
+        <div class="potassium">Potassium</div>
+        <div class="iron">Iron</div>
+        <div class="zinc">Zinc</div>
+        <div class="copper">Copper</div>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="zone1PointCoords.js"></script>
+    <script src="zone2PointCoords.js"></script>
+    <script src="zone3PointCoords.js"></script>
+    <script src="zone4PointCoords.js"></script>
+    <script src="zone5PointCoords.js"></script>
 </body>
 </html>
