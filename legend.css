@@ -5,12 +5,17 @@
     left: 88%;
     background-color: white;
     width: 150px;
-    height: 200px;
+    height: 1px;
+    overflow: hidden;
     padding: 10px;
     padding-top: 20px;
-    padding-bottom: 20px;
-    cursor:pointer;
+    padding-bottom: 10px;
+    cursor:pointer; 
+    transition: height .2s ease-out;
 }
+/* .legend:hover {
+    height: 200px;
+} */
 .legend span {
     color: #419ADA;
     font-weight: bold;

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
     <link rel="stylesheet" href="legend.css">
+    <link rel="stylesheet" href="filters.css">
     <script src="https://js.arcgis.com/4.13/"></script>
     <style>
         html, body, #viewDiv {
@@ -19,6 +21,8 @@
             height: 68%;
         }
     </style>
+
+    
 </head>
 <body>
     <div id="viewDiv"></div>
@@ -32,11 +36,47 @@
         <div class="copper">Copper</div>
     </div>
 
+    <button class="filters">
+        <i class="material-icons">
+            filter_list
+        </i>
+        <span>FILTERS</span>
+    </button>
+    <div class="layerList">
+        <span id="nutrients">Soil Nutrients</span>
+        <span id="microOrg">Soil Microorganisms</span>
+        <span id="salinity">Soil Salinity Levels</span>
+        <span id="th">Temperature and Humidity Level</span>
+        <span id="stats">Statistics and Crop Health</span>
+    </div>
+
+
+
+    <script>
+        let filters = document.querySelector('.filters');
+        let layerL = document.querySelector('.layerList');
+        filters.onclick = () => {
+           layerL.classList.toggle("show");
+        }
+
+        
+
+        
+
+    </script>
+
     <script src="index.js"></script>
     <script src="zone1PointCoords.js"></script>
     <script src="zone2PointCoords.js"></script>
     <script src="zone3PointCoords.js"></script>
     <script src="zone4PointCoords.js"></script>
     <script src="zone5PointCoords.js"></script>
+
+    <script src="polygonDataZ1.js"></script>
+    <script src="polygonDataZ2.js"></script>
+    <script src="polygonDataZ3.js"></script>
+    <script src="polygonDataZ4.js"></script>
+    <script src="polygonDataZ5.js"></script>
+    <!-- <script src="formatRings.js"></script> -->
 </body>
 </html>

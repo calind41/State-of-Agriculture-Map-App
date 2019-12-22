@@ -27,15 +27,14 @@ require([
     });
     map.add(layer);
 
-    
-
-    // -----
+    // coords widget
     var coordsWidget = document.createElement('div');
     coordsWidget.id = "coordsWidget";
     coordsWidget.className="esri-widget esri-component";
     coordsWidget.style.padding="7px 15px 5px";
-
     view.ui.add(coordsWidget,"bottom-right");
+
+  
 
     function showCoordinates(pt) {
         var coords = "Lat/Lon " + pt.latitude.toFixed(3) + " " + pt.longitude.toFixed(3) +
@@ -46,30 +45,26 @@ require([
         // console.log(coords);
     }
 
-
-
-    
     // -----------------------------------------------------------------------------------------------------------------------------------
-    let k = 0;
-    let pointsZ2 = [];
-    function showCoordinatess(pt) {
-        var coords = "" +  pt.longitude.toFixed(3)+ " " +  pt.latitude.toFixed(3);
+    // let k = 0;
+    // let pointsZ2 = [];
+    // let str = "";
+    // function showCoordinatess(pt) {
+    //     var coords = "" +  pt.longitude.toFixed(3)+ " " +  pt.latitude.toFixed(3) + ",";
+    //     str+= coords;
 
-        // coordsWidget.innerHTML = coords;
-        pointsZ2[k] = {
-            long: pt.longitude.toFixed(3),
-            lat: pt.latitude.toFixed(3)
-        };
-        drawPoint(pointsZ2,k);
-        k++;
-        console.log(coords);
-    }
+    //     // coordsWidget.innerHTML = coords;
+    //     pointsZ2[k] = {
+    //         long: pt.longitude.toFixed(3),
+    //         lat: pt.latitude.toFixed(3)
+    //     };
+    //     drawPoint(pointsZ2,k);
+    //     k++;
+    //     console.log(coords);
+    // }
+
 
     // -------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
     view.watch("stationary",function(isStationary) {
         showCoordinates(view.center);
     });
@@ -77,25 +72,24 @@ require([
     view.on("pointer-move",function(evt) {
         showCoordinates(view.toMap({x: evt.x,y: evt.y}));
     })
-    view.on("click",function(evt) {
-        showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
-        // console.log(evt.x + " " + evt.y);
-    })
+    // view.on("click",function(evt) {
+    //     showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
+    //     // console.log(evt.x + " " + evt.y);
+    // })
 
-    // -----------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------------------------------------
 
 
-    // /// -------------------- ADD A POINT GRAPHIC 
-    var graphicsLayer = new GraphicsLayer();
-    map.add(graphicsLayer);
-
-    
-
+    // add points 
+    var graphicsLayerPoints = null;
     let soilNutrientColorCodes = ["#ED4F4F","#4CF07A","#1A0CBB","#FF21C1","#756767","#C1DA28"];
-
-
-    
     function drawPoint(arr,pos) {
+        
+        if (graphicsLayerPoints === null) {
+            graphicsLayerPoints = new GraphicsLayer();
+            map.add(graphicsLayerPoints);
+        }
+       
         var point = {
             type: "point",
             longitude: arr[pos].long,
@@ -136,31 +130,40 @@ require([
             // popupTemplate: popupTemplate
         });
         
-        graphicsLayer.add(pointGraphic);
+        graphicsLayerPoints.add(pointGraphic);
     
     }
 
   
+    function showMicroNutrientLayer() {
 
-    for (let i  = 1 ;i < coordsObj.length; i++) {
-        drawPoint(coordsObj,i);
-    }
-    for (let i = 1; i < coordsObj2.length; i++) {
-        drawPoint(coordsObj2,i);
-    }
-    for (let i = 1; i < coordsObj3.length; i++) {
-        drawPoint(coordsObj3,i);
-    }
-    for (let i = 1; i < coordsObj4.length; i++) {
-        drawPoint(coordsObj4,i);
-    }
-    for (let i = 1; i < coordsObj5.length; i++) {
-        drawPoint(coordsObj5,i);
+        if (graphicsLayerPoints === null) {
+            
+            for (let i  = 1 ;i < coordsObj.length; i++) {
+                drawPoint(coordsObj,i);
+            }
+            for (let i = 1; i < coordsObj2.length; i++) {
+                drawPoint(coordsObj2,i);
+            }
+            for (let i = 1; i < coordsObj3.length; i++) {
+                drawPoint(coordsObj3,i);
+            }
+            for (let i = 1; i < coordsObj4.length; i++) {
+                drawPoint(coordsObj4,i);
+            }
+            for (let i = 1; i < coordsObj5.length; i++) {
+                drawPoint(coordsObj5,i);
+            }
+        }
+        
+
     }
 
+    let graphicsLayerZones = GraphicsLayer();
+    
     function drawZone1() {
-        var graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+        // var graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayerZones);
         var zone1 = {
             type: "polygon",
             rings: [
@@ -181,8 +184,8 @@ require([
             type: "simple-fill",
             color: [0,139,79,0.1], // orange opacity 80%
             outline: {
-                color: [255,255,255],
-                width: 1
+                color: [0,0,0],
+                width: 3
             },
             // style: "backward-diagonal"
         };
@@ -192,12 +195,12 @@ require([
             symbol: simpleFillSymbol
         });
         
-        graphicsLayer.add(polygonGraphic);
+        graphicsLayerZones.add(polygonGraphic);
     }
 
     function drawZone2() {
-        var graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+        // var graphicsLayer = new GraphicsLayer();
+        // map.add(graphicsLayer);
         var zone2 = {
             type: "polygon",
             rings: [
@@ -222,8 +225,8 @@ require([
             type: "simple-fill",
             color: [50,240,79,0.2], // orange opacity 80%
             outline: {
-                color: [255,255,255],
-                width: 1
+                color: [0,0,0],
+                width: 3
             },
             // style: "backward-diagonal"
         };
@@ -233,12 +236,12 @@ require([
             symbol: simpleFillSymbol
         });
 
-        graphicsLayer.add(polygonGraphic);
+        graphicsLayerZones.add(polygonGraphic);
     }
 
     function drawZone3() {
-        var graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+        // var graphicsLayer = new GraphicsLayer();
+        // map.add(graphicsLayer);
         var zone3 = {
             type: "polygon",
             rings: [
@@ -273,8 +276,8 @@ require([
             type: "simple-fill",
             color: [123,240,43,0.2], // orange opacity 80%
             outline: {
-                color: [255,255,255],
-                width: 1
+                color: [0,0,0],
+                width: 3
             },
             // style: "backward-diagonal"
         };
@@ -284,12 +287,12 @@ require([
             symbol: simpleFillSymbol
         });
 
-        graphicsLayer.add(polygonGraphic);
+        graphicsLayerZones.add(polygonGraphic);
     }
 
     function drawZone4() {
-        var graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+        // var graphicsLayer = new GraphicsLayer();
+        // map.add(graphicsLayer);
         var zone4 = {
             type: "polygon",
             rings: [
@@ -314,8 +317,8 @@ require([
             type: "simple-fill",
             color: [50,240,179,0.2], // orange opacity 80%
             outline: {
-                color: [255,255,255],
-                width: 1
+                color: [0,0,0],
+                width: 3
             },
             // style: "backward-diagonal"
         };
@@ -325,12 +328,12 @@ require([
             symbol: simpleFillSymbol
         });
 
-        graphicsLayer.add(polygonGraphic);
+        graphicsLayerZones.add(polygonGraphic);
     }
 
     function drawZone5() {
-        var graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+        // var graphicsLayer = new GraphicsLayer();
+        // map.add(graphicsLayer);
         var zone5 = {
             type: "polygon",
             rings: [
@@ -359,8 +362,8 @@ require([
             type: "simple-fill",
             color: [1,1,179,0.2], // orange opacity 80%
             outline: {
-                color: [255,255,255],
-                width: 1
+                color: [0,0,0],
+                width: 3
             },
             // style: "backward-diagonal"
         };
@@ -370,7 +373,7 @@ require([
             symbol: simpleFillSymbol
         });
 
-        graphicsLayer.add(polygonGraphic);
+        graphicsLayerZones.add(polygonGraphic);
     }
 
     drawZone1();
@@ -379,9 +382,99 @@ require([
     drawZone4();
     drawZone5();
 
+   
 
+
+
+    
+    let graphicsLayerPolygons = null;
+    function drawPolygon(ringsArr) {
+        // let graphicsLayer = new GraphicsLayer();
+        // map.add(graphicsLayer);
+        
+        if (graphicsLayerPolygons === null) {
+            graphicsLayerPolygons = new GraphicsLayer();
+            map.add(graphicsLayerPolygons);
+        }
+           
+
+        let zone4 = {
+            type: "polygon",
+            rings: ringsArr
+        };
+        let r = Math.floor(Math.random() * 256);
+        let g = Math.floor(Math.random() * 256);
+        let b  = Math.floor(Math.random() * 256);
+        
+        let simpleFillSymbol = {
+            type: "simple-fill",
+            color: [r,g,b,0.5],
+            outline: {
+                color: [255,255,255],
+                width: 1
+            },
+            // style: "backward-diagonal"
+        };
+
+        let polygonGraphic = new Graphic({
+            geometry: zone4,
+            symbol: simpleFillSymbol
+        });
+
+        graphicsLayerPolygons.add(polygonGraphic);
+    }
+
+    function showMicroOrgLayer() {
+        if (graphicsLayerPolygons === null) {
+
+            for (let i = 0; i < zn1.length; i++)
+                drawPolygon(zn1[i]);
+            for (let i = 0; i < zn2.length; i++)
+                drawPolygon(zn2[i]);
+            for (let i = 0; i < zn3.length; i++)
+                drawPolygon(zn3[i]);
+            for (let i = 0; i < zn4.length; i++)
+                drawPolygon(zn4[i]);
+            for (let i = 0; i < zn5.length; i++)
+                drawPolygon(zn5[i]);
+        }
+        
+
+    }
+
+    let nutrFltr = document.getElementById("nutrients");
+    let micrOrgFltr = document.getElementById("microOrg");
+    let salFltr = document.getElementById("salinity");
+    let thFltr = document.getElementById("th");
+    let statsFltr = document.getElementById("stats");
+        
+    nutrFltr.onclick = () => {
+        
+        map.layers.remove(graphicsLayerPolygons);
+        graphicsLayerPolygons = null;
+        
+        showMicroNutrientLayer();
+        document.querySelector('.layerList').classList.toggle("show");
+    }
+    micrOrgFltr.onclick = () => {
+        map.layers.remove(graphicsLayerPoints);
+        graphicsLayerPoints = null;
+        showMicroOrgLayer();
+        document.querySelector('.layerList').classList.toggle("show");
+    }
+    salFltr.onclick = () => {
+
+    }
+    thFltr.onclick = () => {
+
+    }
+    statsFltr.onclick = () => {
+
+    }
     
   });
 
 
   
+
+ 
