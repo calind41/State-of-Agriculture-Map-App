@@ -475,17 +475,11 @@ require([
         legend4.style.display="none";
         legend5.style.display="none";
         // display legend
-        // let legend = document.querySelector('.legend-micronutrients');
-        console.log(legend1.style.display);
+        
+        legend1.style.display = "block";
         legend1.style.height = "200px";
         legend1.style.paddingBottom = '20px';
 
-        // if (legend.style.display !== 'block') {
-        //     console.log('enter in display none')
-        //     legend.style.display = 'block';
-        //     legend.style.height = '200px';
-            
-        // }
     }
     micrOrgFltr.onclick = () => {
         let title = document.querySelector('.filters span');

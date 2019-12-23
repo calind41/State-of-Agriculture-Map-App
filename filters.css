@@ -26,10 +26,10 @@
 
 .layerList {
     display: none;
-    position: relative;
+    position: absolute;
     width: 180px;
     left: 87%;
-    bottom: 470px;
+    bottom: 452px;
     background-color: white;
     padding: 10px 0px;
     transition: all .2s ease-out;
