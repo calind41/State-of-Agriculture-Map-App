@@ -1,0 +1,34 @@
+.navigator {
+    position: relative;
+    margin:auto;
+    bottom: 20px;
+    width: 200px;
+    height: 40px;
+    font-size: 23px;
+    cursor: pointer;
+
+}
+.navigator div.locations {
+    position: relative;
+    font-weight: bold;
+    width: 99px;
+
+    margin: 0px 10px;
+    color: #419ADA;
+    border-bottom: 2px solid transparent;
+    transition: all .05s ease-in;
+}
+.navigator div.locations:hover {
+    border-bottom: 2px solid #419ADA;
+}
+
+.navigator div.charts {
+    position: relative;
+    left: 59%;
+    bottom: 27px;
+    width: 68px;
+    height: 27px;
+}
+.navigator div.charts:hover {
+    border-bottom: 2px solid #419ADA; 
+}

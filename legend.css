@@ -1,5 +1,6 @@
 
-.legend {
+.legend-micronutrients {
+    /* display: none; */
     position: absolute;
     bottom: 300px;
     left: 88%;
@@ -11,25 +12,26 @@
     padding-top: 20px;
     padding-bottom: 10px;
     cursor:pointer; 
-    transition: height .2s ease-out;
+    transition: all .2s ease-out;
 }
 /* .legend:hover {
     height: 200px;
+    padding-bottom: 20px;
 } */
-.legend span {
+.legend-micronutrients span {
     color: #419ADA;
     font-weight: bold;
     position: relative;
     bottom: 14px;
     left: 32%;
 }
-.legend .nitro {
+.legend-micronutrients .nitro {
     font-size: 18px;
     position: relative;
     left: 30px;
     margin-bottom: 10px;
 }
-.legend .nitro::before {
+.legend-micronutrients .nitro::before {
     content: " ";
     position: absolute;
     left: -25px;
@@ -38,14 +40,14 @@
     background-color: #ED4F4F;
 }
 
-.legend .phosporus {
+.legend-micronutrients .phosporus {
     font-size: 18px;
     position: relative;
     left: 30px;
     margin-bottom: 10px;
 
 }
-.legend .phosporus::before {
+.legend-micronutrients .phosporus::before {
     content: " ";
     position: absolute;
     left: -25px;
@@ -54,14 +56,14 @@
     background-color: #4CF07A;
 }
 
-.legend .potassium {
+.legend-micronutrients .potassium {
     font-size: 18px;
     position: relative;
     left: 30px;
     margin-bottom: 10px;
 
 }
-.legend .potassium::before {
+.legend-micronutrients .potassium::before {
     content: " ";
     position: absolute;
     left: -25px;
@@ -70,13 +72,13 @@
     background-color: #1A0CBB;
 }
 
-.legend .iron {
+.legend-micronutrients .iron {
     font-size: 18px;
     position: relative;
     left: 30px;
     margin-bottom: 10px;
 }
-.legend .iron::before {
+.legend-micronutrients .iron::before {
     content: " ";
     position: absolute;
     left: -25px;
@@ -85,13 +87,13 @@
     background-color: #FF21C1;
 }
 
-.legend .zinc {
+.legend-micronutrients .zinc {
     font-size: 18px;
     position: relative;
     left: 30px;
     margin-bottom: 10px;
 }
-.legend .zinc::before {
+.legend-micronutrients .zinc::before {
     content: " ";
     position: absolute;
     left: -25px;
@@ -100,13 +102,13 @@
     background-color: #756767;
 }
 
-.legend .copper {
+.legend-micronutrients .copper {
     font-size: 18px;
     position: relative;
     left: 30px;
     margin-bottom: 10px;
 }
-.legend .copper::before {
+.legend-micronutrients .copper::before {
     content: " ";
     position: absolute;
     left: -25px;
@@ -115,12 +117,286 @@
     background-color:#C1DA28;
 }
 
+/* ----------------------------------- MICROORGANISMS---------------------------------- */
 
 
-/* <div class="nitro">Nitrogen</div>
-<div class="phosporus">Phosporus</div>
-<div class="potassium">Potassium</div>
-<div class="iron">Iron</div>
-<div class="zinc">Zinc</div>
-<div class="copper">Copper</div>
-</div> */
+.legend-microorg {
+    /* display: none; */
+    position: absolute;
+    bottom: 300px;
+    left: 88%;
+    background-color: white;
+    width: 150px;
+    height: 1px;
+    overflow: hidden;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    cursor:pointer; 
+    transition: all .2s ease-out;
+}
+/* .legend-microorg:hover {
+    height: 200px;
+    padding-bottom: 20px;
+} */
+.legend-microorg span:first-child {
+    color: #419ADA;
+    font-weight: bold;
+    position: relative;
+    bottom: 14px;
+    left: 32%;
+}
+
+.legend-microorg .beneficial-microorg,
+.legend-microorg .phyto,
+.legend-microorg .fusarium,
+.legend-microorg .verti,
+.legend-microorg .pythium,
+.legend-microorg .rhizo {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+
+.legend-microorg .beneficial-microorg:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #756767;
+}
+
+.legend-microorg span.pathogenic {
+    color: #419ADA;
+    font-weight: bold;
+    position: relative;
+    bottom: 5px;
+    left: 25px;
+    width: 400px;
+}
+
+.legend-microorg .phyto:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #c43232;
+}
+
+.legend-microorg .fusarium:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #1abde6;
+}
+
+.legend-microorg .verti:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #3a0404;
+}
+
+.legend-microorg .pythium:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #219416;
+}
+
+.legend-microorg .rhizo:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #d36e10;
+}
+
+/* -------------------------- SOIL SALINITY ---------------------------------- */
+
+.legend-salinity {
+    /* display: none; */
+    position: absolute;
+    bottom: 300px;
+    left: 88%;
+    background-color: white;
+    width: 150px;
+    height: 1px;
+    overflow: hidden;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    cursor:pointer; 
+    transition: all .2s ease-out;
+}
+/* .legend-salinity:hover {
+    height: 200px;
+    padding-bottom: 20px;
+} */
+.legend-salinity span {
+    color: #419ADA;
+    font-weight: bold;
+    position: relative;
+    bottom: 14px;
+    left: 32%;
+}
+.legend-salinity .salinity {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend-salinity .salinity:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #d36e10;
+}
+
+/* --------------------------------------- WEATHER & HUMIDITY ----------------------- */
+
+
+.legend-wh {
+    /* display: none; */
+    position: absolute;
+    bottom: 300px;
+    left: 88%;
+    background-color: white;
+    width: 150px;
+    height: 1px;
+    overflow: hidden;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    cursor:pointer; 
+    transition: all .2s ease-out;
+}
+/* .legend-wh:hover {
+    height: 200px;
+    padding-bottom: 20px;
+} */
+.legend-wh span {
+    color: #419ADA;
+    font-weight: bold;
+    position: relative;
+    bottom: 14px;
+    left: 32%;
+}
+.legend-wh .temp,
+.legend-wh .humidity {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend-wh .temp:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #d36e10;
+}
+
+.legend-wh .humidity:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #1b130c;
+}
+
+/* --------------------------------- STATS -------------------------------------- */
+
+.legend-stats {
+    /* display: none; */
+    position: absolute;
+    bottom: 300px;
+    left: 88%;
+    background-color: white;
+    width: 150px;
+    height: 1px;
+    overflow: hidden;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    cursor:pointer; 
+    transition: all .2s ease-out;
+}
+/* .legend-stats:hover {
+    height: 200px;
+    padding-bottom: 20px;
+} */
+.legend-stats span {
+    color: #419ADA;
+    font-weight: bold;
+    position: relative;
+    bottom: 14px;
+    left: 32%;
+}
+.legend-stats .cartofi,
+.legend-stats .fl-soare,
+.legend-stats .grau,
+.legend-stats .orz,
+.legend-stats .porumb {
+    font-size: 18px;
+    position: relative;
+    left: 30px;
+    margin-bottom: 10px;
+}
+.legend-stats .cartofi:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #d36e10;
+}
+
+.legend-stats .fl-soare:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #1b130c;
+}
+
+.legend-stats .grau:before{
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #86674b;
+}
+.legend-stats .orz:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #5ac429;
+}
+
+.legend-stats .porumb:before {
+    content: " ";
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    background-color: #db6b90;
+}

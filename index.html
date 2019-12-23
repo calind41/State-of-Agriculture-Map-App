@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+    <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="legend.css">
     <link rel="stylesheet" href="filters.css">
     <script src="https://js.arcgis.com/4.13/"></script>
@@ -26,7 +27,7 @@
 </head>
 <body>
     <div id="viewDiv"></div>
-    <div class="legend">
+    <div class="legend-micronutrients">
         <span>Legend</span>
         <div class="nitro">Nitrogen</div>
         <div class="phosporus">Phosporus</div>
@@ -34,6 +35,41 @@
         <div class="iron">Iron</div>
         <div class="zinc">Zinc</div>
         <div class="copper">Copper</div>
+    </div>
+
+    <div class="legend-microorg">
+        <span>Legend</span>
+        <div class="beneficial-microorg">Beneficial Micr.</div>
+        <span class="pathogenic">Pathogenic Micr.</span>
+        <div class="phyto">Phytophtora</div>
+        <div class="fusarium">Fusarium</div>
+        <div class="verti">Verticillium</div>
+        <div class="pythium">Pythium</div>
+        <div class="rhizo">Rhizoctonga</div>
+    </div>
+
+    <div class="legend-salinity">
+        <span>Legend</span>
+        <div class="salinity">Salinity x%</div>
+        <div class="salinity">Salinity y%</div>
+        <div class="salinity">Salinity z% </div>
+    </div>
+
+    <div class="legend-wh">
+        <span>Legend</span>
+        <div class="temp">Temp &lt 0&degC	</div>
+        <div class="temp">Temp &gt 14&degC </div>
+        <div class="temp">Temp &gt 33&degC </div>
+        <!-- <div class="humidity">Humidity</div> -->
+    </div>
+
+    <div class="legend-stats">
+        <span>Legend</span>
+        <div class="cartofi">Cartofi</div>
+        <div class="fl-soare">Floarea soarelui</div>
+        <div class="grau">Grau</div>
+        <div class="orz">Orz</div>
+        <div class="porumb">Porumb</div>
     </div>
 
     <button class="filters">
@@ -51,6 +87,17 @@
     </div>
 
 
+    <!-- tables & graphs-->
+
+    <div class="navigator">
+        <div class="locations">Locations</div>
+        <div class="charts">Charts</div>
+    </div>
+
+
+
+
+
 
     <script>
         let filters = document.querySelector('.filters');
@@ -58,13 +105,9 @@
         filters.onclick = () => {
            layerL.classList.toggle("show");
         }
-
-        
-
-        
-
     </script>
 
+    <script src="map.js"></script>
     <script src="index.js"></script>
     <script src="zone1PointCoords.js"></script>
     <script src="zone2PointCoords.js"></script>
