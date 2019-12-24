@@ -92,12 +92,25 @@ require([
             graphicsLayerPoints = new GraphicsLayer();
             map.add(graphicsLayerPoints);
         }
-       
-        var point = {
-            type: "point",
-            longitude: arr[pos].long,
-            latitude: arr[pos].lat 
-        };
+
+        var point;
+        if (Array.isArray(arr[0]) === false ) {
+            point = {
+                type: "point",
+                longitude: arr[pos].long,
+                latitude: arr[pos].lat
+            }
+        }
+        else {
+            point = {
+                type: "point",
+                longitude: arr[pos][0],
+                latitude: arr[pos][1]
+            };
+        }
+        
+
+        
         
         
         let idx = Math.floor(Math.random() * 6);
@@ -161,22 +174,25 @@ require([
     function showMicroNutrientLayer() {
 
         if (graphicsLayerPoints === null) {
+
+            let partsArr = [];
+            partsArr[0] = argesPts;
+            partsArr[1] = dambovitaPts;
+            partsArr[2] = prahovaPts;
+            partsArr[3] = buzauPts;
+            partsArr[4] = brailaPts;
+            partsArr[5] = ialomitaPts;
+            partsArr[6] = calarasiPts;
+            partsArr[7] = bucurestiPts;
+            partsArr[8] = giurgiuPts;
+            partsArr[9] = teleromanPts;
+
+            for (let i = 0; i < partsArr.length; i++) {
+                for (let j = 0; j < partsArr[i].length; j++) {
+                    drawPoint(partsArr[i],j);
+                }
+            }
             
-            for (let i  = 1 ;i < coordsObj.length; i++) {
-                drawPoint(coordsObj,i);
-            }
-            for (let i = 1; i < coordsObj2.length; i++) {
-                drawPoint(coordsObj2,i);
-            }
-            for (let i = 1; i < coordsObj3.length; i++) {
-                drawPoint(coordsObj3,i);
-            }
-            for (let i = 1; i < coordsObj4.length; i++) {
-                drawPoint(coordsObj4,i);
-            }
-            for (let i = 1; i < coordsObj5.length; i++) {
-                drawPoint(coordsObj5,i);
-            }
         }
         
 
@@ -184,7 +200,7 @@ require([
 
     let graphicsLayerZones = GraphicsLayer();
     
-    function drawZone1() {
+    function drawBorders() {
         // var graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayerZones);
         var zone1 = {
@@ -208,187 +224,23 @@ require([
         });
         
         graphicsLayerZones.add(polygonGraphic);
+
+        // ---------------------------------------------------------
+
+        drawLine(borderDambovita);
+        drawLine(borderArges);
+        drawLine(borderTeleroman);
+        drawLine(borderPrahova);
+        drawLine(borderGiurgiu);
+        drawLine(borderCalarasi);
+        drawLine(borderBucuresti);
+        drawLine(borderIalomita);
+        drawLine(borderBuzau);
     }
 
-    function drawZone2() {
-        // var graphicsLayer = new GraphicsLayer();
-        // map.add(graphicsLayer);
-        var zone2 = {
-            type: "polygon",
-            rings: [[12,23]]
-        };
 
-        var simpleFillSymbol = {
-            type: "simple-fill",
-            color: [50,240,79,0.2], // orange opacity 80%
-            outline: {
-                color: [255,255,255],
-                width: 5
-            },
-            // style: "backward-diagonal"
-        };
+    drawBorders();
 
-        var polygonGraphic = new Graphic({
-            geometry: zone2,
-            symbol: simpleFillSymbol
-        });
-
-        graphicsLayerZones.add(polygonGraphic);
-    }
-
-    function drawZone3() {
-        // var graphicsLayer = new GraphicsLayer();
-        // map.add(graphicsLayer);
-        var zone3 = {
-            type: "polygon",
-            rings: [
-                // [26.019,44.835],
-                [25.695,44.932],
-                [25.783,44.923],
-                [25.774,44.830],
-                [25.822,44.805],
-                [25.875,44.826],
-                [25.937,44.724],
-                [26.279,44.745],
-                [26.593,44.848],
-                [26.663,44.814],
-                [26.945,44.795],
-                [27.002,44.829],
-                [27.186,44.782],
-                [27.270,45.000],
-                [27.129,45.162],
-                [27.173,45.233],
-                [27.344,45.211],
-                [27.494,45.465],
-                [25.806,45.760],
-                [25.841,45.646],
-                [25.631,45.486],
-                [25.758,45.276],
-                [25.732,45.069],
-                [25.695,44.932]
-            ]
-        };
-
-        var simpleFillSymbol = {
-            type: "simple-fill",
-            color: [123,240,43,0.2], // orange opacity 80%
-            outline: {
-                color: [0,0,0],
-                width: 3
-            },
-            // style: "backward-diagonal"
-        };
-
-        var polygonGraphic = new Graphic({
-            geometry: zone3,
-            symbol: simpleFillSymbol
-        });
-
-        graphicsLayerZones.add(polygonGraphic);
-    }
-
-    function drawZone4() {
-        // var graphicsLayer = new GraphicsLayer();
-        // map.add(graphicsLayer);
-        var zone4 = {
-            type: "polygon",
-            rings: [
-                // [26.019,44.835],
-                [26.662,44.812],
-                [26.938,44.790],
-                [27.009,44.827],
-                [27.176,44.777],
-                [27.268,45.005],
-                [27.132,45.160],
-                [27.180,45.228],
-                [27.343,45.212],
-                [27.497,45.472],
-                [27.976,45.389],
-                [27.549,44.005],
-                [26.354,44.049],
-                [26.662,44.812]
-            ]
-        };
-
-        var simpleFillSymbol = {
-            type: "simple-fill",
-            color: [50,240,179,0.2], // orange opacity 80%
-            outline: {
-                color: [0,0,0],
-                width: 3
-            },
-            // style: "backward-diagonal"
-        };
-
-        var polygonGraphic = new Graphic({
-            geometry: zone4,
-            symbol: simpleFillSymbol
-        });
-
-        graphicsLayerZones.add(polygonGraphic);
-    }
-
-    function drawZone5() {
-        // var graphicsLayer = new GraphicsLayer();
-        // map.add(graphicsLayer);
-        var zone5 = {
-            type: "polygon",
-            rings: [
-                // [26.019,44.835],
-                [24.832,44.104],
-                [24.955,44.141],
-                [25.202,44.459],
-                [25.109,44.694],
-                [25.650,44.847],
-                [25.694,44.937],
-                [25.777,44.921],
-                [25.773,44.828],
-                [25.817,44.800],
-                [25.874,44.828],
-                [25.931,44.725],
-                [26.287,44.750],
-                [26.590,44.844],
-                [26.661,44.812],
-                [26.335,44.034],
-                [24.832,44.072],
-                [24.832,44.104]
-            ]
-        };
-
-        var simpleFillSymbol = {
-            type: "simple-fill",
-            color: [1,1,179,0.2], // orange opacity 80%
-            outline: {
-                color: [0,0,0],
-                width: 3
-            },
-            // style: "backward-diagonal"
-        };
-
-        var polygonGraphic = new Graphic({
-            geometry: zone5,
-            symbol: simpleFillSymbol
-        });
-
-        graphicsLayerZones.add(polygonGraphic);
-    }
-
-    drawZone1();
-    drawLine(borderDambovita);
-    drawLine(borderArges);
-    drawLine(borderTeleroman);
-    drawLine(borderPrahova);
-    drawLine(borderGiurgiu);
-    drawLine(borderCalarasi);
-    drawLine(borderBucuresti);
-    drawLine(borderIalomita);
-    drawLine(borderBuzau);
-    // drawZone2();
-    // drawZone3();
-    // drawZone4();
-    // drawZone5();
-
-   
 
     
 
@@ -444,6 +296,9 @@ require([
         
             for (let i = 0; i < prahovaP.length; i++) {
                 drawPolygon(prahovaP[i]);
+            }
+            for (let i = 0; i < calarasiP.length; i++) {
+                drawPolygon(calarasiP[i]);
             }
         
             for (let i = 0; i < bucurestiP.length; i++) {
