@@ -256,14 +256,18 @@
     left: 30px;
     margin-bottom: 10px;
 }
-.legend-salinity .salinity:before {
+.legend-salinity .salinity:first-of-type:before,
+.legend-salinity .salinity:nth-of-type(2):before,
+.legend-salinity .salinity:nth-of-type(3):before {
     content: " ";
     position: absolute;
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #d36e10;
 }
+.legend-salinity .salinity:first-of-type:before { background-color: rgb(105,105,105);}
+.legend-salinity .salinity:nth-of-type(2):before { background-color:rgb(169,169,169);}
+.legend-salinity .salinity:nth-of-type(3):before { background-color: rgb(192,192,192);}
 
 /* --------------------------------------- WEATHER & HUMIDITY ----------------------- */
 
@@ -301,14 +305,19 @@
     left: 30px;
     margin-bottom: 10px;
 }
-.legend-wh .temp:before {
+.legend-wh .temp:first-of-type:before,
+.legend-wh .temp:nth-of-type(2):before,
+.legend-wh .temp:nth-of-type(3):before {
     content: " ";
     position: absolute;
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #d36e10;
 }
+.legend-wh .temp:first-of-type:before { background-color: #949EF8;}
+.legend-wh .temp:nth-of-type(2):before { background-color: #cce67e;}
+.legend-wh .temp:nth-of-type(3):before { background-color: #ed8702;}
+
 
 .legend-wh .humidity:before {
     content: " ";

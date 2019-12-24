@@ -1,3 +1,7 @@
+html {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .navigator {
     position: relative;
     margin:auto;
@@ -24,16 +28,11 @@
 
 .navigator div.charts {
     position: relative;
-    left: 59%;
-    bottom: 27px;
+    left: 67%;
+    bottom: 29px;
     width: 68px;
     height: 27px;
 }
 .navigator div.charts:hover {
     border-bottom: 2px solid #419ADA; 
-}
-
-#content {
-    /* border: 2px solid red; */
-   
 }

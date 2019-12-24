@@ -334,7 +334,7 @@ require([
         
     nutrFltr.onclick = () => {
         let title = document.querySelector('.filters span');
-        document.querySelector('.filters').style.backgroundColor='gray';
+        document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
         title.textContent = 'Soil Nutrients';
         title.style.right = '5px';
@@ -360,7 +360,7 @@ require([
     }
     micrOrgFltr.onclick = () => {
         let title = document.querySelector('.filters span');
-        document.querySelector('.filters').style.backgroundColor='gray';
+        document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
         title.textContent = 'Soil Microorg.';
         title.style.right = '5px';
@@ -384,7 +384,7 @@ require([
     salFltr.onclick = () => {
 
         let title = document.querySelector('.filters span');
-        document.querySelector('.filters').style.backgroundColor='gray';
+        document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
         title.textContent = 'Soil Salinity';
         title.style.right = '10px';
@@ -410,7 +410,7 @@ require([
     thFltr.onclick = () => {
 
         let title = document.querySelector('.filters span');
-        document.querySelector('.filters').style.backgroundColor='gray';
+        document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
         title.textContent = 'Weather';
         title.style.right = '22px';
@@ -435,7 +435,7 @@ require([
     statsFltr.onclick = () => {
 
         let title = document.querySelector('.filters span');
-        document.querySelector('.filters').style.backgroundColor='gray';
+        document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
         title.textContent = 'Statistics';
         title.style.right = '22px';
