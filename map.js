@@ -46,22 +46,22 @@ require([
     }
 
     // -----------------------------------------------------------------------------------------------------------------------------------
-    let k = 0;
-    let pointsZ2 = [];
-    let str = "";
-    function showCoordinatess(pt) {
-        var coords = "" +  pt.longitude.toFixed(3)+ " " +  pt.latitude.toFixed(3) + ",";
-        str+= coords;
+    // let k = 0;
+    // let pointsZ2 = [];
+    // let str = "";
+    // function showCoordinatess(pt) {
+    //     var coords = "" +  pt.longitude.toFixed(3)+ " " +  pt.latitude.toFixed(3) + ",";
+    //     str+= coords;
 
-        // coordsWidget.innerHTML = coords;
-        pointsZ2[k] = {
-            long: pt.longitude.toFixed(3),
-            lat: pt.latitude.toFixed(3)
-        };
-        drawPoint(pointsZ2,k);
-        k++;
-        console.log(coords);
-    }
+    //     // coordsWidget.innerHTML = coords;
+    //     pointsZ2[k] = {
+    //         long: pt.longitude.toFixed(3),
+    //         lat: pt.latitude.toFixed(3)
+    //     };
+    //     drawPoint(pointsZ2,k);
+    //     k++;
+    //     console.log(coords);
+    // }
 
 
     // -------------------------------------------------------------------------------------------------------------------------------------
@@ -72,14 +72,14 @@ require([
     view.on("pointer-move",function(evt) {
         showCoordinates(view.toMap({x: evt.x,y: evt.y}));
     })
-    view.on("click",function(evt) {
-        showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
-        // console.log(evt.x + " " + evt.y);
-    })
-    window.onkeydown = (evt) => {
-        if (evt.which == 87)
-            console.log('w');
-    }
+    // view.on("click",function(evt) {
+    //     showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
+    //     // console.log(evt.x + " " + evt.y);
+    // })
+    // window.onkeydown = (evt) => {
+    //     if (evt.which == 87)
+    //         console.log('w');
+    // }
     // ---------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -93,28 +93,17 @@ require([
             map.add(graphicsLayerPoints);
         }
 
-        var point;
-        if (Array.isArray(arr[0]) === false ) {
-            point = {
-                type: "point",
-                longitude: arr[pos].long,
-                latitude: arr[pos].lat
-            }
-        }
-        else {
-            point = {
-                type: "point",
-                longitude: arr[pos][0],
-                latitude: arr[pos][1]
-            };
-        }
+        var point = {
+            type: "point",
+            longitude: arr[pos][0],
+            latitude: arr[pos][1]
+        };
         
 
         
         
         
         let idx = Math.floor(Math.random() * 6);
-        // console.log("idx is " + idx);
 
         
         var simpleMarkerSymbol = {
