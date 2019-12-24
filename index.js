@@ -22,3 +22,8 @@ function handleClick(evt) {
     }
 
 }
+
+// let long = Number(item.slice(10,16));
+// let lat = Number(item.slice(17,23));
+
+// return [long,lat];

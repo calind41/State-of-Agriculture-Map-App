@@ -46,22 +46,22 @@ require([
     }
 
     // -----------------------------------------------------------------------------------------------------------------------------------
-    // let k = 0;
-    // let pointsZ2 = [];
-    // let str = "";
-    // function showCoordinatess(pt) {
-    //     var coords = "" +  pt.longitude.toFixed(3)+ " " +  pt.latitude.toFixed(3) + ",";
-    //     str+= coords;
+    let k = 0;
+    let pointsZ2 = [];
+    let str = "";
+    function showCoordinatess(pt) {
+        var coords = "" +  pt.longitude.toFixed(3)+ " " +  pt.latitude.toFixed(3) + ",";
+        str+= coords;
 
-    //     // coordsWidget.innerHTML = coords;
-    //     pointsZ2[k] = {
-    //         long: pt.longitude.toFixed(3),
-    //         lat: pt.latitude.toFixed(3)
-    //     };
-    //     drawPoint(pointsZ2,k);
-    //     k++;
-    //     console.log(coords);
-    // }
+        // coordsWidget.innerHTML = coords;
+        pointsZ2[k] = {
+            long: pt.longitude.toFixed(3),
+            lat: pt.latitude.toFixed(3)
+        };
+        drawPoint(pointsZ2,k);
+        k++;
+        console.log(coords);
+    }
 
 
     // -------------------------------------------------------------------------------------------------------------------------------------
@@ -72,11 +72,14 @@ require([
     view.on("pointer-move",function(evt) {
         showCoordinates(view.toMap({x: evt.x,y: evt.y}));
     })
-    // view.on("click",function(evt) {
-    //     showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
-    //     // console.log(evt.x + " " + evt.y);
-    // })
-
+    view.on("click",function(evt) {
+        showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
+        // console.log(evt.x + " " + evt.y);
+    })
+    window.onkeydown = (evt) => {
+        if (evt.which == 87)
+            console.log('w');
+    }
     // ---------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -134,7 +137,27 @@ require([
     
     }
 
-  
+
+    function drawLine(coords) {
+        var simpleLineSymbol = {
+            type: "simple-line",
+            color: [226, 119, 40], // orange
+            width: 2
+          };
+   
+          var polyline = {
+            type: "polyline",
+            paths: coords
+          };
+   
+          var polylineGraphic = new Graphic({
+            geometry: polyline,
+            symbol: simpleLineSymbol
+          });
+   
+          graphicsLayerZones.add(polylineGraphic);
+    }
+    
     function showMicroNutrientLayer() {
 
         if (graphicsLayerPoints === null) {
@@ -166,18 +189,7 @@ require([
         map.add(graphicsLayerZones);
         var zone1 = {
             type: "polygon",
-            rings: [
-                [24.413,45.076],
-                [23.771,44.128],
-                [24.835,44.103],
-                [24.949,44.138],
-                [25.081,44.270],
-                [25.204,44.449],
-                [25.111,44.687],
-                [24.874,44.803],
-                [24.602,45.008],
-                [24.413,45.076]
-            ]
+            rings: borderMuntenia
         };
 
         var simpleFillSymbol = {
@@ -203,30 +215,15 @@ require([
         // map.add(graphicsLayer);
         var zone2 = {
             type: "polygon",
-            rings: [
-                // [26.019,44.835],
-                [25.304,44.748],
-                [25.646,44.844],
-                [25.730,45.047],
-                [25.761,45.273],
-                [25.638,45.483],
-                [25.849,45.643],
-                [25.800,45.759],
-                [25.475,45.802],
-                [24.425,45.133],
-                [24.398,45.081],
-                [24.596,45.012],
-                [24.860,44.807],
-                [25.102,44.698]
-            ]
+            rings: [[12,23]]
         };
 
         var simpleFillSymbol = {
             type: "simple-fill",
             color: [50,240,79,0.2], // orange opacity 80%
             outline: {
-                color: [0,0,0],
-                width: 3
+                color: [255,255,255],
+                width: 5
             },
             // style: "backward-diagonal"
         };
@@ -377,14 +374,23 @@ require([
     }
 
     drawZone1();
-    drawZone2();
-    drawZone3();
-    drawZone4();
-    drawZone5();
+    drawLine(borderDambovita);
+    drawLine(borderArges);
+    drawLine(borderTeleroman);
+    drawLine(borderPrahova);
+    drawLine(borderGiurgiu);
+    drawLine(borderCalarasi);
+    drawLine(borderBucuresti);
+    drawLine(borderIalomita);
+    drawLine(borderBuzau);
+    // drawZone2();
+    // drawZone3();
+    // drawZone4();
+    // drawZone5();
 
    
 
-
+    
 
     
     let graphicsLayerPolygons = null;
@@ -424,19 +430,46 @@ require([
         graphicsLayerPolygons.add(polygonGraphic);
     }
 
+
+   
+
     function showMicroOrgLayer() {
         if (graphicsLayerPolygons === null) {
-
-            for (let i = 0; i < zn1.length; i++)
-                drawPolygon(zn1[i]);
-            for (let i = 0; i < zn2.length; i++)
-                drawPolygon(zn2[i]);
-            for (let i = 0; i < zn3.length; i++)
-                drawPolygon(zn3[i]);
-            for (let i = 0; i < zn4.length; i++)
-                drawPolygon(zn4[i]);
-            for (let i = 0; i < zn5.length; i++)
-                drawPolygon(zn5[i]);
+            for (let i = 0; i < argesP.length; i++) {
+                drawPolygon(argesP[i]);
+            }
+            for (let i = 0; i < dambovitaP.length; i++) {
+                drawPolygon(dambovitaP[i]);
+            }
+        
+            for (let i = 0; i < prahovaP.length; i++) {
+                drawPolygon(prahovaP[i]);
+            }
+        
+            for (let i = 0; i < bucurestiP.length; i++) {
+                drawPolygon(bucurestiP[i]);
+            }
+        
+            for (let i = 0; i < ialomitaP.length; i++) {
+                drawPolygon(ialomitaP[i]);
+            }
+        
+            for (let i = 0; i < buzauP.length; i++) {
+                drawPolygon(buzauP[i]);
+            }
+        
+            for (let i = 0; i < brailaP.length; i++) {
+                drawPolygon(brailaP[i]);
+            }
+        
+            for (let i  = 0; i < giurgiuP.length; i++) {
+                drawPolygon(giurgiuP[i]);
+            }
+        
+            for (let i = 0; i < teleromanP.length; i++) {
+                drawPolygon(teleromanP[i]);
+            }
+            
         }
         
 
@@ -581,6 +614,8 @@ require([
         legend5.style.height="200px";
         legend5.style.paddingBottom="20px";
     }
+
+
     
   });
 
