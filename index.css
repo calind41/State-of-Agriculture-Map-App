@@ -32,3 +32,8 @@
 .navigator div.charts:hover {
     border-bottom: 2px solid #419ADA; 
 }
+
+#content {
+    /* border: 2px solid red; */
+   
+}

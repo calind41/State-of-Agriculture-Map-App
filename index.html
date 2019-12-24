@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="legend.css">
     <link rel="stylesheet" href="filters.css">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
     <script src="https://js.arcgis.com/4.13/"></script>
     <style>
         html, body, #viewDiv {
@@ -93,12 +98,16 @@
         <div class="locations">Locations</div>
         <div class="charts">Charts</div>
     </div>
+<!-- ####################################################################################################################################### -->
+
+    <div id="content">
+        
+    </div>
 
 
 
 
-
-
+    <script src="content.js"></script>
     <script>
         let filters = document.querySelector('.filters');
         let layerL = document.querySelector('.layerList');
@@ -106,7 +115,6 @@
            layerL.classList.toggle("show");
         }
     </script>
-
     <script src="./polygonsData/teleromanData.js"></script>
     <script src="./polygonsData/giurgiuData.js"></script>
     <script src="./polygonsData/brailaData.js"></script>
