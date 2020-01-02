@@ -160,11 +160,11 @@ require([
           graphicsLayerZones.add(polylineGraphic);
     }
     
+    let partsArr = [];
     function showMicroNutrientLayer() {
 
         if (graphicsLayerPoints === null) {
 
-            let partsArr = [];
             partsArr[0] = argesPts;
             partsArr[1] = dambovitaPts;
             partsArr[2] = prahovaPts;

@@ -17,7 +17,13 @@ $(function() {
     let contentEl = $("#content");
     function handleClick(evt)  {
         if (evt.currentTarget.id === 'nutrients'){
-            contentEl.load('nutrients.html');
+            contentEl.load('nutrients.html',() => {
+                let t  = document.querySelector('#nutr');
+                let d = t.getElementsByTagName("tr");
+                for (let i  = 1; i < d.length; i++) {
+                    
+                }
+            });
             currentTbl="nutrients.html";
         }
         if (evt.currentTarget.id === 'microOrg') {
