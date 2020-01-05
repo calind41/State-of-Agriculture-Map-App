@@ -215,3 +215,4 @@ let teleromanPts = apts.map((item) => {
     let lat = parseFloat(item.slice(17,25));
     return [long,lat];
 });
+console.log("teleromanPts pts " + teleromanPts.length);

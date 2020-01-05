@@ -45,11 +45,15 @@ let pointsData;
 
 // afisare in tabel valorile medii pentru micronutrienti bazat pe valori hardcodate
 
-// let judet = [];
+// // let judet = [];
 // judet[0] = [
 //     {
 //         value: 34,
-//         medie: 32
+//         medie1: 32,
+//         medie2: 32,
+//         medie3: 32,
+//         medie4: 32,
+//         medie5: 32
 //     },
 //     {
 //         value: 12
@@ -59,7 +63,11 @@ let pointsData;
 // judet[1] = [
 //     {
 //         value: 34,
-//         medie: 594
+//         medie1: 594,
+//         medie2: 594,
+//         medie3: 594,
+//         medie4: 594,
+//         medie5: 594
 //     },
 //     {
 //         value: 12
@@ -69,7 +77,11 @@ let pointsData;
 // judet[2] = [
 //     {
 //         value: 34,
-//         medie: 8
+//         medie1: 8,
+//         medie2: 8,
+//         medie3: 8,
+//         medie4: 8,
+//         medie5: 8
 //     },
 //     {
 //         value: 12
@@ -79,7 +91,11 @@ let pointsData;
 // judet[3] = [
 //     {
 //         value: 34,
-//         medie: 95
+//         medie1: 95,
+//         medie2: 95,
+//         medie3: 95,
+//         medie4: 95,
+//         medie5: 95
 //     },
 //     {
 //         value: 12
@@ -89,7 +105,11 @@ let pointsData;
 // judet[4] = [
 //     {
 //         value: 34,
-//         medie: 5
+//         medie1: 5,
+//         medie2: 5,
+//         medie3: 5,
+//         medie4: 5,
+//         medie5: 5
 //     },
 //     {
 //         value: 12
@@ -99,7 +119,11 @@ let pointsData;
 // judet[5] = [
 //     {
 //         value: 34,
-//         medie: 94
+//         medie1: 94,
+//         medie2: 94,
+//         medie3: 94,
+//         medie4: 94,
+//         medie5: 94
 //     },
 //     {
 //         value: 12
@@ -109,7 +133,11 @@ let pointsData;
 // judet[6] = [
 //     {
 //         value: 34,
-//         medie: 235
+//         medie1: 235,
+//         medie2: 235,
+//         medie3: 235,
+//         medie4: 235,
+//         medie5: 235
 //     },
 //     {
 //         value: 12
@@ -119,7 +147,11 @@ let pointsData;
 // judet[7] = [
 //     {
 //         value: 34,
-//         medie: 234
+//         medie1: 234,
+//         medie2: 234,
+//         medie3: 234,
+//         medie4: 234,
+//         medie5: 234
 //     },
 //     {
 //         value: 12
@@ -129,7 +161,11 @@ let pointsData;
 // judet[8] = [
 //     {
 //         value: 34,
-//         medie: 12
+//         medie1: 12,
+//         medie2: 12,
+//         medie3: 12,
+//         medie4: 12,
+//         medie5: 12
 //     },
 //     {
 //         value: 12

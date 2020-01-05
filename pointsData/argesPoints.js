@@ -232,7 +232,6 @@ map.js:63 24.521 45.446,
 map.js:63 24.552 45.566`;
 
 let apts = argesPoints.split(",");
-
 let argesPts = apts.map((item) => {
 
     let long = parseFloat(item.slice(10,17));

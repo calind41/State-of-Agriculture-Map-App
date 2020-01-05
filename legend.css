@@ -5,7 +5,7 @@
     bottom: 300px;
     left: 88%;
     background-color: white;
-    width: 150px;
+    width: 170px;
     height: 1px;
     overflow: hidden;
     padding: 10px;
@@ -126,7 +126,7 @@
     bottom: 300px;
     left: 88%;
     background-color: white;
-    width: 150px;
+    width: 170px;
     height: 1px;
     overflow: hidden;
     padding: 10px;
@@ -165,7 +165,7 @@
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #756767;
+    background-color: #3FEF23;
 }
 
 .legend-microorg span.pathogenic {
@@ -183,7 +183,7 @@
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #c43232;
+    background-color: #29F5DD;
 }
 
 .legend-microorg .fusarium:before {
@@ -192,7 +192,7 @@
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #1abde6;
+    background-color: #A412D8;
 }
 
 .legend-microorg .verti:before {
@@ -201,7 +201,7 @@
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #3a0404;
+    background-color: #CDBD2B;
 }
 
 .legend-microorg .pythium:before {
@@ -210,7 +210,7 @@
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #219416;
+    background-color: #6D7513;
 }
 
 .legend-microorg .rhizo:before {
@@ -219,7 +219,7 @@
     left: -25px;
     width: 20px;
     height: 20px;
-    background-color: #d36e10;
+    background-color: #ED4F4F;
 }
 
 /* -------------------------- SOIL SALINITY ---------------------------------- */
@@ -230,7 +230,7 @@
     bottom: 300px;
     left: 88%;
     background-color: white;
-    width: 150px;
+    width: 170px;
     height: 1px;
     overflow: hidden;
     padding: 10px;
@@ -278,7 +278,7 @@
     bottom: 300px;
     left: 88%;
     background-color: white;
-    width: 150px;
+    width: 170px;
     height: 1px;
     overflow: hidden;
     padding: 10px;
@@ -336,7 +336,7 @@
     bottom: 300px;
     left: 88%;
     background-color: white;
-    width: 150px;
+    width: 170px;
     height: 1px;
     overflow: hidden;
     padding: 10px;

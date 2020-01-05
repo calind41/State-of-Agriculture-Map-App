@@ -1,3 +1,15 @@
+
+let showMicroNutrientLayer;
+let showMicrOrgLayer;
+let showWTempLayer;
+let showStatsLayer;
+
+let medNutrPerPart = [];
+let medMicrOrgPerPart = [];
+let medSalntyPerPart = [];
+let medTempPerPart = [];
+let medStatsPerPart = [];
+
 require([
     "esri/Map",
     "esri/views/MapView",
@@ -86,7 +98,7 @@ require([
     // add points 
     var graphicsLayerPoints = null;
     let soilNutrientColorCodes = ["#ED4F4F","#4CF07A","#1A0CBB","#FF21C1","#756767","#C1DA28"];
-    function drawPoint(arr,pos) {
+    function drawPoint(arr,pos,color,nutrientValues,nutrientName) {
         
         if (graphicsLayerPoints === null) {
             graphicsLayerPoints = new GraphicsLayer();
@@ -95,20 +107,14 @@ require([
 
         var point = {
             type: "point",
-            longitude: arr[pos][0],
-            latitude: arr[pos][1]
+            longitude: arr[nutrientValues[pos].point_index][0],
+            latitude: arr[nutrientValues[pos].point_index][1]
         };
         
-
-        
-        
-        
-        let idx = Math.floor(Math.random() * 6);
-
         
         var simpleMarkerSymbol = {
             type: "simple-marker",
-            color: soilNutrientColorCodes[idx], // orange
+            color: color,
             // outline: {
             //     color: [255,255,255], // white
             //     width: 1
@@ -123,16 +129,16 @@ require([
         // };
     
         // create popup template
-        // var popupTemplate = {
-        //     title: "{Name}",
-        //     content: "I am located at <b>{Location}</b>."
-        // };
+        var popupTemplate = {
+            title: nutrientName,
+            content: "Value " + nutrientValues[pos].value
+        };
     
         var pointGraphic = new Graphic({
             geometry: point,
             symbol: simpleMarkerSymbol,
             // attributes: attributes,
-            // popupTemplate: popupTemplate
+            popupTemplate: popupTemplate
         });
         
         graphicsLayerPoints.add(pointGraphic);
@@ -161,7 +167,7 @@ require([
     }
     
     let partsArr = [];
-    function showMicroNutrientLayer() {
+    showMicroNutrientLayer = function () {
 
         if (graphicsLayerPoints === null) {
 
@@ -176,14 +182,93 @@ require([
             partsArr[8] = giurgiuPts;
             partsArr[9] = teleromanPts;
 
+
+            let medNitro = 0;
+            let medPhosph = 0;
+            let medPotass = 0;
+            let medIron = 0;
+            let medZinc = 0;
+            let medCopper = 0;
+
+
+            
+            
             for (let i = 0; i < partsArr.length; i++) {
+                let nr,rest;
                 for (let j = 0; j < partsArr[i].length; j++) {
-                    drawPoint(partsArr[i],j);
+                    nr = Math.floor(partsArr[i].length / 6);
+                    rest = partsArr[i].length - nr;
+
+                    if (j < nr) {
+                        // nitrogen
+                        drawPoint(partsArr[i],j,"#ED4F4F",judet[i],"Nitrogen");
+                        medNitro += judet[i][j].value;
+                    } else if (j < 2*nr) {
+                        // phosporus
+                        drawPoint(partsArr[i],j,"#4CF07A",judet[i],"Phosporus");
+                        medPhosph += judet[i][j].value;
+                    } else if (j < 3*nr) {
+                        //potassium
+                        drawPoint(partsArr[i],j,"#1A0CBB",judet[i],"Potassium");
+                        medPotass += judet[i][j].value;
+                    } else if (j < 4*nr) {
+                        // iron
+                        drawPoint(partsArr[i],j,"#FF21C1",judet[i],"Iron");
+                        medIron += judet[i][j].value;
+                    } else if (j < 5*nr) {
+                        //zinc
+                        drawPoint(partsArr[i],j,"#756767",judet[i],"Zinc");
+                        medZinc += judet[i][j].value;
+                    } else if (j <= 6*nr) {
+                        // copper
+                        drawPoint(partsArr[i],j,"#C1DA28",judet[i],"Copper");
+                        medCopper += judet[i][j].value;
+                    } else if (rest != 0) {
+                        // zinc
+                        drawPoint(partsArr[i],j,"#756767",judet[i],"Zinc");
+                        medZinc += judet[i][j].value;
+                    }
+                    
                 }
+                medNitro = (medNitro / nr).toFixed(2);
+                medPhosph = (medPhosph / nr).toFixed(2);
+                medPotass = (medPotass / nr).toFixed(2);
+                medIron = (medIron / nr).toFixed(2);
+                medZinc = (medZinc / (nr + rest)).toFixed(2);
+                medCopper = (medCopper / nr).toFixed(2);
+                // console.log("iter " + i + " and nitro" + medNitro + ", phosp " + medPhosph + " , potass " + medPotass + ", iron"  + medIron + " ,zinc " + medZinc + " ,copper" + medCopper);
+                medNutrPerPart[i] = [
+                                        medNitro,
+                                        medPhosph,
+                                        medPotass,
+                                        medIron,
+                                        medZinc,
+                                        medCopper
+                                                    ];
+                medNitro = 0;
+                medPhosph = 0;
+                medPotass = 0;
+                medIron = 0;
+                medZinc = 0;
+                medCopper = 0;
+                                                    
             }
+
+
+            
             
         }
-        
+        // judet idx 0 -> Arges
+        // judet idx 1 -> Dambovita
+        // judet idx 2 -> Prahova
+        // judet idx 3 -> Buzau
+        // judet idx 4 -> Braila
+        // judet idx 5 -> Ialomita
+        // judet idx 6 -> Calarasi
+        // judet idx 7 -> Bucuresti
+        // judet idx 8 -> Giurgiu
+        // judet idx 9 -> Teleroman
+        // console.log(judet);
 
     }
 
@@ -235,7 +320,7 @@ require([
 
     
     let graphicsLayerPolygons = null;
-    function drawPolygon(ringsArr) {
+    function drawPolygon(ringsArr,pos,color,sensorVals,title,layerNr) {
         // let graphicsLayer = new GraphicsLayer();
         // map.add(graphicsLayer);
         
@@ -247,25 +332,37 @@ require([
 
         let zone4 = {
             type: "polygon",
-            rings: ringsArr
+            rings: ringsArr[sensorVals[pos].polygon_index]
         };
-        let r = Math.floor(Math.random() * 256);
-        let g = Math.floor(Math.random() * 256);
-        let b  = Math.floor(Math.random() * 256);
+
         
         let simpleFillSymbol = {
             type: "simple-fill",
-            color: [r,g,b,0.5],
+            color: color,
             outline: {
                 color: [255,255,255],
                 width: 1
             },
             // style: "backward-diagonal"
         };
+        var popupTemplate;
+        if (layerNr == 2 || layerNr == 5) {
+            popupTemplate = {
+                title: title,
+                content: "Value " + sensorVals[pos].value
+              };
+    
+        } else {
+            popupTemplate = {
+                title: title
+              };
+    
+        }
 
         let polygonGraphic = new Graphic({
             geometry: zone4,
-            symbol: simpleFillSymbol
+            symbol: simpleFillSymbol,
+            popupTemplate: popupTemplate
         });
 
         graphicsLayerPolygons.add(polygonGraphic);
@@ -274,50 +371,286 @@ require([
 
    
 
-    function showMicroOrgLayer() {
+    showMicrOrgLayer = function () {
+        let layerNr = 2;
         if (graphicsLayerPolygons === null) {
-            for (let i = 0; i < argesP.length; i++) {
-                drawPolygon(argesP[i]);
+
+            partsArr = [];
+            partsArr[0] = argesP;
+            partsArr[1] = dambovitaP;
+            partsArr[2] = prahovaP;
+            partsArr[3] = calarasiP;
+            partsArr[4] = bucurestiP;
+            partsArr[5] = ialomitaP;
+            partsArr[6] = buzauP;
+            partsArr[7] = brailaP;
+            partsArr[8] = giurgiuP;
+            partsArr[9] = teleromanP;
+
+            let sz = partsArr.length;
+
+            let medBnfcl = 0;
+            let medPhyto = 0;
+            let medFusrm = 0;
+            let medVertc = 0;
+            let medPythm = 0;
+            let medRhizct = 0;
+
+
+            for (let i = 0; i < sz; i++) { 
+                let nr,rest;
+                 for (let j = 0; j < partsArr[i].length; j++) {
+                    nr = Math.floor(partsArr[i].length / 6);
+                    rest = partsArr[i].length - nr;
+
+                    if (j < nr) {
+                        // beneficial microorg.
+                        drawPolygon(partsArr[i],j,"#3FEF23",judet[i],"Beneficial Microorganisms",layerNr);
+                        medBnfcl += judet[i][j].value;
+                    } else if (j < 2*nr) {
+                        // phytophtora
+                        drawPolygon(partsArr[i],j,"#29F5DD",judet[i],"Phytophtora",layerNr);
+                        medPhyto += judet[i][j].value;
+                    } else if (j < 3*nr) {
+                        // fusarium
+                        drawPolygon(partsArr[i],j,"#A412D8",judet[i],"Fusarium",layerNr);
+                        medFusrm += judet[i][j].value;
+                    } else if (j < 4*nr) {
+                        // verticillium
+                        drawPolygon(partsArr[i],j,"#CDBD2B",judet[i],"Verticillium",layerNr);
+                        medVertc += judet[i][j].value;
+                    } else if (j < 5*nr) {
+                        // pythium
+                        drawPolygon(partsArr[i],j,"#6D7513",judet[i],"Pythium",layerNr);
+                        medPythm += judet[i][j].value;
+                    } else if (j <= 6*nr) {
+                        // rhizoctonga
+                        drawPolygon(partsArr[i],j,"#ED4F4F",judet[i],"Rhizoctonga",layerNr);
+                        medRhizct += judet[i][j].value;
+                    } else if (rest != 0) {
+                        // pythium
+                        drawPolygon(partsArr[i],j,"#6D7513",judet[i],"Pythium",layerNr);
+                        medPythm += judet[i][j].value;
+                    }
+                }
+
+                medBnfcl = (medBnfcl / nr).toFixed(2);
+                medPhyto = (medPhyto / nr).toFixed(2);
+                medFusrm = (medFusrm / nr).toFixed(2);
+                medVertc = (medVertc / nr).toFixed(2);
+                medPythm = (medPythm / (nr+rest)).toFixed(2);
+                medRhizct = (medRhizct / nr).toFixed(2);
+                
+                medMicrOrgPerPart[i] = [
+                    medBnfcl,
+                    medPhyto,
+                    medFusrm,
+                    medVertc,
+                    medPythm,
+                    medRhizct
+                ];
+
+                medBnfcl = 0;
+                medPhyto = 0;
+                medFusrm = 0;
+                medVertc = 0;
+                medPythm = 0;
+                medRhizct = 0;
             }
-            for (let i = 0; i < dambovitaP.length; i++) {
-                drawPolygon(dambovitaP[i]);
-            }
-        
-            for (let i = 0; i < prahovaP.length; i++) {
-                drawPolygon(prahovaP[i]);
-            }
-            for (let i = 0; i < calarasiP.length; i++) {
-                drawPolygon(calarasiP[i]);
-            }
-        
-            for (let i = 0; i < bucurestiP.length; i++) {
-                drawPolygon(bucurestiP[i]);
-            }
-        
-            for (let i = 0; i < ialomitaP.length; i++) {
-                drawPolygon(ialomitaP[i]);
-            }
-        
-            for (let i = 0; i < buzauP.length; i++) {
-                drawPolygon(buzauP[i]);
-            }
-        
-            for (let i = 0; i < brailaP.length; i++) {
-                drawPolygon(brailaP[i]);
-            }
-        
-            for (let i  = 0; i < giurgiuP.length; i++) {
-                drawPolygon(giurgiuP[i]);
-            }
-        
-            for (let i = 0; i < teleromanP.length; i++) {
-                drawPolygon(teleromanP[i]);
-            }
-            
         }
-        
 
     }
+
+    showSalinityLayer = function () {
+        let layerNr = 3;
+        let maxVSalinity = 800;
+        let color;
+        let title;
+        if (graphicsLayerPolygons === null) {
+
+            partsArr = [];
+            partsArr[0] = argesP;
+            partsArr[1] = dambovitaP;
+            partsArr[2] = prahovaP;
+            partsArr[3] = calarasiP;
+            partsArr[4] = bucurestiP;
+            partsArr[5] = ialomitaP;
+            partsArr[6] = buzauP;
+            partsArr[7] = brailaP;
+            partsArr[8] = giurgiuP;
+            partsArr[9] = teleromanP;
+
+            let sz = partsArr.length;
+
+           let medSalinity = 0;
+
+
+            for (let i = 0; i < sz; i++) { 
+                let nr = partsArr[i].length;
+                 for (let j = 0; j < nr; j++) {
+
+                    if ( (judet[i][j].value / maxVSalinity) * 100 <= 40){
+                        color = 'rgb(192,192,192)';
+                    } else if ((judet[i][j].value / maxVSalinity) * 100 > 40 
+                                &&  (judet[i][j].value / maxVSalinity) * 100 <= 70) {
+                        color = 'rgb(169,169,169)';
+                    } else if ((judet[i][j].value / maxVSalinity) * 100 > 70) {
+                        color = 'rgb(105,105,105)';
+                    }
+
+                    title = 'Salinity ' + (judet[i][j].value / maxVSalinity) * 100 + '%';
+                    drawPolygon(partsArr[i],j,color,judet[i],title,layerNr);
+                    medSalinity += judet[i][j].value;
+
+                }
+
+                medSalinity = (medSalinity / nr).toFixed(2);
+                medSalntyPerPart[i] = [
+                   medSalinity
+                ];
+                medSalinity = 0;
+            }
+        }
+    }
+
+    showWTempLayer = function () {
+        let layerNr = 4;
+        let color;
+        let title;
+        if (graphicsLayerPolygons === null) {
+
+            partsArr = [];
+            partsArr[0] = argesP;
+            partsArr[1] = dambovitaP;
+            partsArr[2] = prahovaP;
+            partsArr[3] = calarasiP;
+            partsArr[4] = bucurestiP;
+            partsArr[5] = ialomitaP;
+            partsArr[6] = buzauP;
+            partsArr[7] = brailaP;
+            partsArr[8] = giurgiuP;
+            partsArr[9] = teleromanP;
+
+            let sz = partsArr.length;
+
+            let medTemp = 0;
+            let medHumidity = 0;
+
+
+            for (let i = 0; i < sz; i++) { 
+                let nr = partsArr[i].length;
+                 for (let j = 0; j < nr; j++) {
+
+                    if ( judet[i][j].value >= 0
+                            && judet[i][j].value < 14 ) {
+                        color = '#949EF8';
+                    } else if ( judet[i][j].value >= 14
+                                &&  judet[i][j].value <= 30) {
+                        color = '#cce67e';
+                    } else if ( judet[i][j].value > 30 )  {
+                        color = '#ed8702';
+                    }
+
+                    let humidity = (100 - judet[i][j].value * 10 / 6).toFixed(2);
+                    medHumidity += humidity;
+                    title = 'Temperature ' + judet[i][j].value +'&degC ' + 'Humidity: ' + humidity + "%";
+                    drawPolygon(partsArr[i],j,color,judet[i],title,layerNr);
+                    medTemp += judet[i][j].value;
+                }
+
+                medTemp = (medTemp / nr).toFixed(2);
+                medHumidity  = (medHumidity / nr).toFixed(2);
+                medTempPerPart[i] = [
+                    medTemp,
+                    medHumidity
+                ];
+                medTemp = 0;
+                medHumidity = 0;
+            }
+        }
+    }
+
+    showStatsLayer = function() {
+        let layerNr = 5;
+        if (graphicsLayerPolygons === null) {
+
+            partsArr = [];
+            partsArr[0] = argesP;
+            partsArr[1] = dambovitaP;
+            partsArr[2] = prahovaP;
+            partsArr[3] = calarasiP;
+            partsArr[4] = bucurestiP;
+            partsArr[5] = ialomitaP;
+            partsArr[6] = buzauP;
+            partsArr[7] = brailaP;
+            partsArr[8] = giurgiuP;
+            partsArr[9] = teleromanP;
+
+            let sz = partsArr.length;
+
+            let medCartofi = 0;
+            let medFlSoar = 0;
+            let medGrau = 0;
+            let medOrz = 0;
+            let medPrmb = 0;
+
+
+            for (let i = 0; i < sz; i++) { 
+                let nr,rest;
+                 for (let j = 0; j < partsArr[i].length; j++) {
+                    nr = Math.floor(partsArr[i].length / 5);
+                    rest = partsArr[i].length - nr;
+
+                    if (j < nr) {
+                        // cartofi
+                        drawPolygon(partsArr[i],j,"#d36e10",judet[i],"Cartofi",layerNr);
+                        medCartofi += judet[i][j].value;
+                    } else if (j < 2*nr) {
+                        // floarea soarelui
+                        drawPolygon(partsArr[i],j,"#1b130c",judet[i],"Floarea soarelui",layerNr);
+                        medFlSoar += judet[i][j].value;
+                    } else if (j < 3*nr) {
+                        // grau
+                        drawPolygon(partsArr[i],j,"#86674b",judet[i],"Grau",layerNr);
+                        medGrau += judet[i][j].value;
+                    } else if (j < 4*nr) {
+                        // orz
+                        drawPolygon(partsArr[i],j,"#5ac429",judet[i],"Orz",layerNr);
+                        medOrz += judet[i][j].value;
+                    } else if (j < 5*nr) {
+                        // porumb
+                        drawPolygon(partsArr[i],j,"#db6b90",judet[i],"Porumb",layerNr);
+                        medPrmb += judet[i][j].value;
+                    } else if (rest != 0) {
+                        // orz
+                        drawPolygon(partsArr[i],j,"#5ac429",judet[i],"Orz",layerNr);
+                        medOrz += judet[i][j].value;
+                    }
+                }
+
+                medCartofi = (medCartofi / nr).toFixed(2);
+                medFlSoar = (medFlSoar / nr).toFixed(2);
+                medGrau = (medGrau / nr).toFixed(2);
+                medOrz = (medOrz / (nr+rest)).toFixed(2);
+                medPrmb = (medPrmb / nr).toFixed(2);
+                
+                medStatsPerPart[i] = [
+                    medCartofi,
+                    medFlSoar,
+                    medGrau,
+                    medOrz,
+                    medPrmb                
+                ];
+
+                medCartofi = 0;
+                medFlSoar = 0;
+                medGrau = 0;
+                medOrz = 0;
+                medPrmb = 0;
+            }
+        }
+    }
+   
 
     let nutrFltr = document.getElementById("nutrients");
     let micrOrgFltr = document.getElementById("microOrg");
@@ -342,7 +675,7 @@ require([
         map.layers.remove(graphicsLayerPolygons);
         graphicsLayerPolygons = null;
         
-        showMicroNutrientLayer();
+        // showMicroNutrientLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
        
@@ -356,7 +689,6 @@ require([
         legend1.style.display = "block";
         legend1.style.height = "200px";
         legend1.style.paddingBottom = '20px';
-
     }
     micrOrgFltr.onclick = () => {
         let title = document.querySelector('.filters span');
@@ -368,7 +700,12 @@ require([
 
         map.layers.remove(graphicsLayerPoints);
         graphicsLayerPoints = null;
-        showMicroOrgLayer();
+        if (graphicsLayerPolygons != null) {
+            map.layers.remove(graphicsLayerPolygons);
+            graphicsLayerPolygons = null;
+        }
+
+        // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
         // display legend
@@ -393,7 +730,11 @@ require([
 
         map.layers.remove(graphicsLayerPoints);
         graphicsLayerPoints = null;
-        showMicroOrgLayer();
+        if (graphicsLayerPolygons != null) {
+            map.layers.remove(graphicsLayerPolygons);
+            graphicsLayerPolygons = null;
+        }
+        // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
 
@@ -418,7 +759,11 @@ require([
 
         map.layers.remove(graphicsLayerPoints);
         graphicsLayerPoints = null;
-        showMicroOrgLayer();
+        if (graphicsLayerPolygons != null) {
+            map.layers.remove(graphicsLayerPolygons);
+            graphicsLayerPolygons = null;
+        }
+        // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
 
@@ -444,7 +789,11 @@ require([
 
         map.layers.remove(graphicsLayerPoints);
         graphicsLayerPoints = null;
-        showMicroOrgLayer();
+        if (graphicsLayerPolygons != null) {
+            map.layers.remove(graphicsLayerPolygons);
+            graphicsLayerPolygons = null;
+        }
+        // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
 
