@@ -36,3 +36,13 @@ html {
 .navigator div.charts:hover {
     border-bottom: 2px solid #419ADA; 
 }
+
+.requestData {
+    position: absolute;
+    bottom: 900px;
+    left: 55px;
+}
+.requestData button {
+    padding: 7px 5px;
+    color: #419ADA;
+}

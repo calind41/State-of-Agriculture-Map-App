@@ -8,7 +8,13 @@
 // judet idx 7 -> Bucuresti
 // judet idx 8 -> Giurgiu
 // judet idx 9 -> Teleroman
- let judet = [];
+
+// 1: 0,600
+// 2: 0,100
+// 3: 0,800
+// 4: 0,50
+// 5: 0,500
+let judet = [];
 $(function() {
 
     let nutrients = document.querySelector('.layerList #nutrients');
@@ -22,6 +28,67 @@ $(function() {
     salinity.addEventListener('click',handleClick);
     th.addEventListener('click',handleClick);
     stats.addEventListener('click',handleClick);
+
+
+    let rfrshData = document.querySelector('.requestData button');
+    rfrshData.addEventListener("click",refreshData);
+
+    function refreshData() {
+        const url1 = 'http://localhost/sensor/1/limit/0,600';
+        const url2 = 'http://localhost/sensor/2/limit/0,100';
+        const url3 = 'http://localhost/sensor/3/limit/0,800';
+        const url4 = 'http://localhost/sensor/4/limit/0,50';
+        const url5 = 'http://localhost/sensor/5/limit/0,500';
+
+        const http1 = new XMLHttpRequest();
+        const http2 = new XMLHttpRequest();
+        const http3 = new XMLHttpRequest();
+        const http4 = new XMLHttpRequest();
+        const http5 = new XMLHttpRequest();
+        http1.open("GET",url1);
+        http2.open("GET",url2);
+        http3.open("GET",url3);
+        http4.open("GET",url4);
+        http5.open("GET",url5);
+        
+        http1.send();
+        http2.send();
+        http3.send();
+        http4.send();
+        http5.send();
+
+        http1.onreadystatechange = (e) => {
+            console.log('enter1');
+            if (http1.readyState == 2) {
+                console.log('done1');
+            }
+        }
+        http2.onreadystatechange = (e) => {
+            console.log('enter2');
+            if (http2.readyState == 2) {
+                console.log('done2');
+            }
+        }
+        http3.onreadystatechange = (e) => {
+            console.log('enter3');
+            if (http3.readyState == 2) {
+                console.log('done3');
+            }
+        }
+        http4.onreadystatechange = (e) => {
+            console.log('enter4');
+            if (http4.readyState == 2) {
+                console.log('done4');
+            }
+        }
+        http5.onreadystatechange = (e) => {
+            console.log('enter5');
+            if (http5.readyState == 2) {
+                console.log('done5');
+            }
+        }
+
+    }
 
     
     let currentTbl="";

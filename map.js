@@ -1,6 +1,7 @@
 
 let showMicroNutrientLayer;
 let showMicrOrgLayer;
+let showSalinityLayer;
 let showWTempLayer;
 let showStatsLayer;
 
@@ -364,7 +365,8 @@ require([
             symbol: simpleFillSymbol,
             popupTemplate: popupTemplate
         });
-
+        if (polygonGraphic)
+            console.log("called");
         graphicsLayerPolygons.add(polygonGraphic);
     }
 
@@ -481,12 +483,12 @@ require([
             partsArr[9] = teleromanP;
 
             let sz = partsArr.length;
-
-           let medSalinity = 0;
+            let medSalinity = 0;
 
 
             for (let i = 0; i < sz; i++) { 
                 let nr = partsArr[i].length;
+                console.log("nr is " + nr);
                  for (let j = 0; j < nr; j++) {
 
                     if ( (judet[i][j].value / maxVSalinity) * 100 <= 40){
