@@ -2,7 +2,7 @@
 .legend-micronutrients {
     /* display: none; */
     position: absolute;
-    bottom: 300px;
+    bottom: 380px;
     left: 88%;
     background-color: white;
     width: 170px;
@@ -123,7 +123,7 @@
 .legend-microorg {
     /* display: none; */
     position: absolute;
-    bottom: 300px;
+    bottom: 380px;
     left: 88%;
     background-color: white;
     width: 170px;
@@ -227,7 +227,7 @@
 .legend-salinity {
     /* display: none; */
     position: absolute;
-    bottom: 300px;
+    bottom: 380px;
     left: 88%;
     background-color: white;
     width: 170px;
@@ -275,7 +275,7 @@
 .legend-wh {
     /* display: none; */
     position: absolute;
-    bottom: 300px;
+    bottom: 380px;
     left: 88%;
     background-color: white;
     width: 170px;
@@ -333,7 +333,7 @@
 .legend-stats {
     /* display: none; */
     position: absolute;
-    bottom: 300px;
+    bottom: 380px;
     left: 88%;
     background-color: white;
     width: 170px;

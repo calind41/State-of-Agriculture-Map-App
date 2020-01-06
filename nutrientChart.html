@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    <style>
+        .box {
+            position: relative;
+            left: 10%;
+            top: 200px;
+            width: 60%;
+        }
+    
+    </style>
+    
+</head>
+<body>
+    <div class="box">
+        <!-- <canvas id="myChart" width="200" height="50"></canvas> -->
+    </div>
+    <!-- < src="chart4Nutrients.js"></> -->
+    <script>
+        
+    
+        let canvasEl = document.createElement("CANVAS");
+        document.querySelector(".box").appendChild(canvasEl);
+        let ctx = canvasEl.getContext('2d');
+        
+        let data = {
+            labels: ["Arges","Braila","Bucuresti","Buzau","Calarasi","Dambovita",
+                        "Giurgiu","Ialomita","Prahova","Teleroman"],
+            datasets: [
+                {
+                    label: "Nitrogen",
+                    backgroundColor: "#ED4F4F",
+                    barThickness: 5,
+                    data: [3,7,4,3,2,5,6,7,8,9]
+                },
+                {
+                    label: "Phosphorus",
+                    backgroundColor: "#4CF07A",
+                    data: [4,3,5,1,6,4,3.4,5,5,7]
+                },
+                {
+                    label: "Potassium",
+                    backgroundColor: "#1A0CBB",
+                    data: [7,2,6,1,2,3,4,7,5,3]
+                },
+                {
+                    label: "Iron",
+                    backgroundColor: "#FF21C1",
+                    data: [4,3,5,1,6,4,3.4,5,5,7]
+                },
+                {
+                    label: "Zinc",
+                    backgroundColor: "#756767",
+                    data: [3,7,4,3,2,5,6,7,8,9]
+                },
+                {
+                    label: "Copper",
+                    backgroundColor: "#C1DA28",
+                    data: [7,2,6,1,2,3,4,7,5,3]
+                }
+            ]
+        };
+        
+        let myBarChart = new Chart(ctx,{
+            type: 'bar',
+            data: data,
+            options: {
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                min: 0,
+                                max: 100
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    
+    
+    </script>
+    
+</body>
+</html>

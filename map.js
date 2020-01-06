@@ -551,7 +551,7 @@ require([
                         color = '#ed8702';
                     }
 
-                    let humidity = (100 - judet[i][j].value * 10 / 6).toFixed(2);
+                    let humidity = (100 - judet[i][j].value * 10 / 6);
                     medHumidity += humidity;
                     title = 'Temperature ' + judet[i][j].value +'&degC ' + 'Humidity: ' + humidity + "%";
                     drawPolygon(partsArr[i],j,color,judet[i],title,layerNr);
@@ -664,8 +664,17 @@ require([
     let legend3 = document.querySelector('.legend-salinity');
     let legend4 = document.querySelector('.legend-wh');
     let legend5 = document.querySelector('.legend-stats');
+
+    let locations  = document.querySelector('.navigator .locations');
+    let charts = document.querySelector('.navigator .charts');
         
     nutrFltr.onclick = () => {
+        
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
+
         let title = document.querySelector('.filters span');
         document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
@@ -687,10 +696,17 @@ require([
         // display legend
         
         legend1.style.display = "block";
-        legend1.style.height = "200px";
+        legend1.style.height = "230px";
         legend1.style.paddingBottom = '20px';
     }
     micrOrgFltr.onclick = () => {
+
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
+
+
         let title = document.querySelector('.filters span');
         document.querySelector('.filters').style.color='#419ADA';
         let icon = document.querySelector('.filters i');
@@ -715,10 +731,15 @@ require([
         legend5.style.display="none";
         
         legend2.style.display="block";
-        legend2.style.height="200px";
+        legend2.style.height="230px";
         legend2.style.paddingBottom="20px";
     }
     salFltr.onclick = () => {
+
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
 
         let title = document.querySelector('.filters span');
         document.querySelector('.filters').style.color='#419ADA';
@@ -745,10 +766,16 @@ require([
         legend5.style.display="none";
         
         legend3.style.display="block";
-        legend3.style.height="200px";
+        legend3.style.height="230px";
         legend3.style.paddingBottom="20px";
     }
     thFltr.onclick = () => {
+
+
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
 
         let title = document.querySelector('.filters span');
         document.querySelector('.filters').style.color='#419ADA';
@@ -774,10 +801,15 @@ require([
         legend5.style.display="none";
         
         legend4.style.display="block";
-        legend4.style.height="200px";
+        legend4.style.height="230px";
         legend4.style.paddingBottom="20px";
     }
     statsFltr.onclick = () => {
+
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
 
         let title = document.querySelector('.filters span');
         document.querySelector('.filters').style.color='#419ADA';
@@ -804,15 +836,10 @@ require([
         legend4.style.display="none";
         
         legend5.style.display="block";
-        legend5.style.height="200px";
+        legend5.style.height="230px";
         legend5.style.paddingBottom="20px";
     }
 
 
     
   });
-
-
-  
-
- 
