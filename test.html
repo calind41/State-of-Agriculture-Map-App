@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const http = new XMLHttpRequest();
+        const url = "http://localhost/incident";
+        http.open("POST",url);
+        http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        let jsonD = {
+            "description": "Atac de rozatoare",
+            "lat": 34.55,
+            "long": 23.41,
+            "judet_index": 3
+        }
+        http.send(JSON.stringify(jsonD));
+
+        http.onreadystatechange = (e) => {
+
+
+            if (http.readyState == 4 && http.status == 200) {
+                
+                console.log("done");
+            }
+            else console.log('failed request');
+            
+        }
+
+        const http2 = new XMLHttpRequest();
+        http2.open("GET",url);
+        http2.send();
+
+        let data = null;
+
+        http2.onreadystatechange = (e) => {
+
+
+            if (http2.readyState == 4 && http2.status == 200) {
+                
+                data = JSON.parse(http2.responseText);
+                console.log(data);
+            }
+            else console.log('failed request');
+            
+        }
+
+    </script>  
+</body>
+</html>

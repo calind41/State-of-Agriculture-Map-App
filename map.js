@@ -18,8 +18,9 @@ require([
     "esri/Graphic",
     "esri/layers/GraphicsLayer",
     "esri/geometry/Point",
-    "esri/widgets/Legend"
-  ], function(Map, MapView,FeatureLayer,Graphic,GraphicsLayer,Point,Legend) {
+    "esri/widgets/Legend",
+    "esri/widgets/Search"
+  ], function(Map, MapView,FeatureLayer,Graphic,GraphicsLayer,Point,Legend,Search) {
 
     var map = new Map({
       basemap: "dark-gray",
@@ -85,10 +86,10 @@ require([
     view.on("pointer-move",function(evt) {
         showCoordinates(view.toMap({x: evt.x,y: evt.y}));
     })
-    // view.on("click",function(evt) {
-    //     showCoordinatess(view.toMap({x: evt.x,y: evt.y}));
-    //     // console.log(evt.x + " " + evt.y);
-    // })
+    view.on("click",function(evt) {
+        getAdress(view.toMap({x: evt.x,y: evt.y}));
+        // console.log(evt.x + " " + evt.y);
+    })
     // window.onkeydown = (evt) => {
     //     if (evt.which == 87)
     //         console.log('w');
@@ -96,6 +97,12 @@ require([
     // ---------------------------------------------------------------------------------------------------------------------------------------
 
 
+    function getAdress(coords) {
+        let lat = coords.latitude.toFixed(3);
+        let long = coords.longitude.toFixed(3);
+
+        
+    }
     // add points 
     var graphicsLayerPoints = null;
     let soilNutrientColorCodes = ["#ED4F4F","#4CF07A","#1A0CBB","#FF21C1","#756767","#C1DA28"];
@@ -370,9 +377,6 @@ require([
         graphicsLayerPolygons.add(polygonGraphic);
     }
 
-
-   
-
     showMicrOrgLayer = function () {
         let layerNr = 2;
         if (graphicsLayerPolygons === null) {
@@ -500,7 +504,8 @@ require([
                         color = 'rgb(105,105,105)';
                     }
 
-                    title = 'Salinity ' + (judet[i][j].value / maxVSalinity) * 100 + '%';
+                    title = 'Salinity ' + ((judet[i][j].value / maxVSalinity) * 100).toFixed(2) + '%';
+                  
                     drawPolygon(partsArr[i],j,color,judet[i],title,layerNr);
                     medSalinity += judet[i][j].value;
 
@@ -555,7 +560,7 @@ require([
 
                     let humidity = (100 - judet[i][j].value * 10 / 6);
                     medHumidity += humidity;
-                    title = 'Temperature ' + judet[i][j].value +'&degC ' + 'Humidity: ' + humidity + "%";
+                    title = 'Temperature ' + judet[i][j].value +'&degC ' + 'Humidity: ' + humidity.toFixed(2) + "%";
                     drawPolygon(partsArr[i],j,color,judet[i],title,layerNr);
                     medTemp += judet[i][j].value;
                 }
@@ -842,6 +847,39 @@ require([
         legend5.style.paddingBottom="20px";
     }
 
+
+    // search widget 
+    let search = new Search({
+        view: view
+    });
+
+    view.on("click",function(evt) {
+        search.clear();
+        view.popup.clear();
+        if (search.activeSource) {
+            let geocoder = search.activeSource.locator; // World geocode service
+            let params = {
+                location: evt.mapPoint
+            };
+
+            geocoder.locationToAddress(params)
+                .then(function(response) { // Show the address found
+                    let address = response.address;
+                    showPopup(address,evt.mapPoint);
+                },function(err) { // show no address found
+                    showPopup("No address found",evt.mapPoint);
+
+                });
+        }
+    });
+
+    function showPopup(address,pt) {
+        view.popup.open({
+            title: + Math.round(pt.longitude * 100000) / 100000 + "," + Math.round(pt.latitude * 100000) / 100000,
+            content: address,
+            location: pt
+        });
+    }
 
     
   });

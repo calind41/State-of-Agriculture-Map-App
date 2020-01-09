@@ -39,10 +39,21 @@ html {
 
 .requestData {
     position: absolute;
-    bottom: 900px;
+    bottom: 901px;
     left: 55px;
 }
 .requestData button {
     padding: 7px 5px;
     color: #419ADA;
+}
+
+
+.reportEvt {
+    position: absolute;
+    bottom: 868px;
+    left: 55px;
+}
+.reportEvt button {
+    padding: 7px 5px;
+    color: rgb(192, 2, 33);
 }

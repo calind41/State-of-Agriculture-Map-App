@@ -1,0 +1,124 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Helvetica,Arial,sans-serif;
+  }
+  .container {
+    height: 550px;
+    position: relative;
+    top: 30px;
+  }
+
+  /* full-width input fields */
+  input[type="text"] {
+    padding: 12px 20px;
+    margin: 8px 26px;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+
+  }
+  input[name="address"] {
+    position: absolute;
+    bottom: 500px;
+    width: 85%;
+    left: 15px;
+  }
+  input[name="lat"] {
+    position: absolute;
+    bottom: 417px;
+    width: 85%;
+    left: 15px;
+  }
+  input[name="long"] {
+    position: absolute;
+    bottom: 332px;
+    width: 85%;
+    left: 15px;
+  }
+  textarea[name="desc"] {
+    padding-top: 9px;
+    position: absolute;
+    top: 200px;
+    left: 5px;
+    width: 85%;
+    height: 27%;
+    margin: 35px;
+  }
+
+  /* set a style for all buttons */
+  button#submitRep {
+    background-color: rgb(192, 2, 33);;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 26px;
+    border: none;
+    cursor: pointer;
+    width: 90%;
+    font-size: 20px;
+    position: relative;
+    top: 77%;
+  }
+  button#submitRep:hover {
+    opacity: 0.8;
+  }
+
+  /* center the image and position the close button */
+  .headContainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+  }
+  
+
+  /* the modal (background) */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  /* Modal Content Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 4% auto 15% auto;
+    border: 1px solid #888;
+    width: 27%;
+    padding-bottom: 30px;
+  }
+
+  /* the close button (x) */
+  .close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+  }
+  .close:hover,.close:focus {
+    color: red;
+    cursor: pointer;
+  }
+
+  /* add Zoom Animation */
+  .animate {
+    animation: zoom 0.6s;
+  }
+
+  @keyframes zoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+  }
+  /* #open-popup {
+    width:200px;
+    margin-top: 200px;
+    margin-left: 160px;
+  } */

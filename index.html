@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="legend.css">
     <link rel="stylesheet" href="filters.css">
+    <link rel="stylesheet" href="pUpForm.css">
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -96,6 +97,28 @@
     <div class="requestData">
         <button>Refresh Data</button>
     </div>
+    
+    <div class="reportEvt">
+        <button id="open-popup">Report Event</button>
+    
+        <div id="modal-wrapper" class="modal">
+        <form class="modal-content animate">
+            <div class="headContainer">
+            <span class="close" title="Close PopUp">&times;</span>
+            <h1 style="text-align:center">Report Form</h1>
+            </div>
+
+            <div class="container">
+            <input type="text" placeholder="Address" name="address">
+            <input type="text" placeholder="Latitude" name="lat">
+            <input type="text" placeholder="Longitude" name="long">
+            <textarea type="text" placeholder="     Description" name="desc"></textarea> 
+            <button id="submitRep" type="submit">Report</button>
+            </div>
+
+        </form>
+        </div>
+    </div>
 
     <!-- change :D -->
     <!-- tables & graphs-->
@@ -134,6 +157,7 @@
     <script src="borderMuntenia.js"></script>
     <script src="map.js"></script>
     <script src="index.js"></script>
+    <script src="pUpForm.js"></script>
 
     <script src="./pointsData/argesPoints.js"></script>
     <script src="./pointsData/dambovitaPoints.js"></script>
