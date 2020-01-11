@@ -22,12 +22,14 @@ $(function() {
     let salinity = document.querySelector('.layerList #salinity');
     let th = document.querySelector('.layerList #th');
     let stats = document.querySelector('.layerList #stats');
+    let reports = document.querySelector('.layerList #reports');
 
     nutrients.addEventListener('click',handleClick);
     microOrg.addEventListener('click',handleClick);
     salinity.addEventListener('click',handleClick);
     th.addEventListener('click',handleClick);
     stats.addEventListener('click',handleClick);
+    reports.addEventListener('click',handleClick);
 
 
     let rfrshData = document.querySelector('.requestData button');
@@ -99,7 +101,8 @@ $(function() {
     let contentEl = $("#content");
 
     function displayChart(datasets,min,max) {
-
+        let txt = document.querySelector('.filters span').textContent;
+        if ( txt != 'FILTERS' && txt != 'Incidents') {
         let bp = [];
         if (currentTblId === "#slnty" || currentTblId === "#wther"){
             console.log("entered");
@@ -137,7 +140,7 @@ $(function() {
         });
         contentEl.append(canvasEl);
 
-
+    }
         
     }   
 
@@ -419,12 +422,17 @@ $(function() {
             currentShLayer = showStatsLayer;
             currentmedArr = medStatsPerPart;
         }
+        if (evt.currentTarget.id === "reports") {
+            contentEl.html("");
+            
+        }
         
     }
 
     let chartViewOn = false;
     $(".navigator .locations").click((evt) => {
-       if ($(".filters span").text() !== 'FILTERS') {
+        let txt = $(".filters span").text();
+       if ( txt !== 'FILTERS' && txt !== "Incidents" ) {
             if(chartViewOn) {
                 contentEl.load(currentTbl,() => {
                     let url;
@@ -480,7 +488,6 @@ $(function() {
                     // }); // sortez ascendent dupa point_index
                     shuffle(judet[i]);
                 }
-                
                 func();
                 let t  = document.querySelector(tblId);
                 let d = t.getElementsByTagName("tr");
@@ -496,6 +503,7 @@ $(function() {
         }
         
     }
+    
 
 });
 

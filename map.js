@@ -19,8 +19,10 @@ require([
     "esri/layers/GraphicsLayer",
     "esri/geometry/Point",
     "esri/widgets/Legend",
-    "esri/widgets/Search"
-  ], function(Map, MapView,FeatureLayer,Graphic,GraphicsLayer,Point,Legend,Search) {
+    "esri/widgets/Search",
+    "esri/symbols/PictureMarkerSymbol",
+    "esri/geometry/Geometry"
+  ], function(Map, MapView,FeatureLayer,Graphic,GraphicsLayer,Point,Legend,Search,PictureMarkerSymbol,Geometry) {
 
     var map = new Map({
       basemap: "dark-gray",
@@ -106,6 +108,7 @@ require([
     // add points 
     var graphicsLayerPoints = null;
     let soilNutrientColorCodes = ["#ED4F4F","#4CF07A","#1A0CBB","#FF21C1","#756767","#C1DA28"];
+
     function drawPoint(arr,pos,color,nutrientValues,nutrientName) {
         
         if (graphicsLayerPoints === null) {
@@ -318,13 +321,94 @@ require([
         drawLine(borderBucuresti);
         drawLine(borderIalomita);
         drawLine(borderBuzau);
+
     }
 
 
     drawBorders();
 
 
+    let reportEvtLayer = null;
+
+    function drawFlags(arr) {
+
+        let sz = arr.length;
+
+        arr.forEach(process);
+
+        function process(item,index) {
+            let pictureMarkerSymbol =  {
+                type: "picture-marker",
+                url:"http://static.arcgis.com/images/Symbols/Basic/RedFlag.png",
+                width: "32px",
+                height: "32px"
+            };
+            let point = {
+                type: "point",
+                longitude: item.long,
+                latitude: item.lat
+            };
+            let popupTemplate = {
+                title: "Reported evt " + index,
+                content: item.desc
+            };
+            let pointGraphic = new Graphic({
+                geometry: point,
+                symbol: pictureMarkerSymbol,
+                popupTemplate: popupTemplate
+            });
+            reportEvtLayer.add(pointGraphic);
+        }
+       
     
+    
+    }
+
+    function showReportEvtsLayer() {
+        if (reportEvtLayer == null) {
+            reportEvtLayer = new GraphicsLayer();
+            // medStatsPerPart.add(reportEvtLayer);
+            map.add(reportEvtLayer);
+        }
+        //====
+        let data = null;
+        function getReports() {
+            const url = "http://localhost/incident";
+            const http2 = new XMLHttpRequest();
+            http2.open("GET",url);
+            http2.send();
+          
+            http2.onreadystatechange = (e) => {
+          
+          
+                if (http2.readyState == 4 && http2.status == 200) {
+                    
+                    data = JSON.parse(http2.responseText);
+                    console.log(data);
+                    let coordsArr = [];
+                    coordsArr = data.map((elem) => {
+                        return {
+                            long: elem.long,
+                            lat: elem.lat,
+                            desc: elem.description
+                        }
+                    });
+                    console.log(coordsArr);
+
+                    drawFlags(coordsArr);
+
+                }
+                else console.log('failed request');
+                
+              }
+          }
+          getReports();
+          
+          
+
+        // =====
+    
+    }
 
     
     let graphicsLayerPolygons = null;
@@ -338,6 +422,7 @@ require([
         }
            
 
+       
         let zone4 = {
             type: "polygon",
             rings: ringsArr[sensorVals[pos].polygon_index]
@@ -374,6 +459,56 @@ require([
         });
         if (polygonGraphic)
             console.log("called");
+        graphicsLayerPolygons.add(polygonGraphic);
+    }
+
+    // ----
+    function drawPolygon2(ringsArr,polygon_index,color,value,title,layerNr) {
+        // let graphicsLayer = new GraphicsLayer();
+        // map.add(graphicsLayer);
+        
+        if (graphicsLayerPolygons === null) {
+            graphicsLayerPolygons = new GraphicsLayer();
+            map.add(graphicsLayerPolygons);
+        }
+           
+
+       
+        let zone4 = {
+            type: "polygon",
+            rings: ringsArr[polygon_index]
+        };
+
+        
+        let simpleFillSymbol = {
+            type: "simple-fill",
+            color: color,
+            outline: {
+                color: [255,255,255],
+                width: 1
+            },
+            // style: "backward-diagonal"
+        };
+        var popupTemplate;
+        if (layerNr == 2 || layerNr == 5) {
+            popupTemplate = {
+                title: title,
+                content: "Value " + value
+              };
+    
+        } else {
+            popupTemplate = {
+                title: title
+              };
+    
+        }
+
+        let polygonGraphic = new Graphic({
+            geometry: zone4,
+            symbol: simpleFillSymbol,
+            popupTemplate: popupTemplate
+        });
+        
         graphicsLayerPolygons.add(polygonGraphic);
     }
 
@@ -519,6 +654,7 @@ require([
             }
         }
     }
+    let idInterval = null;
 
     showWTempLayer = function () {
         let layerNr = 4;
@@ -563,6 +699,7 @@ require([
                     title = 'Temperature ' + judet[i][j].value +'&degC ' + 'Humidity: ' + humidity.toFixed(2) + "%";
                     drawPolygon(partsArr[i],j,color,judet[i],title,layerNr);
                     medTemp += judet[i][j].value;
+
                 }
 
                 medTemp = (medTemp / nr).toFixed(2);
@@ -574,9 +711,55 @@ require([
                 medTemp = 0;
                 medHumidity = 0;
             }
+            idInterval =  setInterval(
+                function(){
+                    const url = "http://localhost/alert";
+                    const http = new XMLHttpRequest();
+                    http.open("GET",url);
+                    http.send();
+            
+                    let data = null;
+            
+                    http.onreadystatechange = (e) => {
+            
+            
+                        if (http.readyState == 4 && http.status == 200) {
+                            
+                            data = JSON.parse(http.responseText);
+                            let arr = [];
+                            if (data.alert){
+                                arr = getRingData(data.data.polygon_index,data.data.sensor_id);
+                                drawPolygon2(
+                                    partsArr[data.data.sensor_id],
+                                    data.data.polygon_index,
+                                    "red",
+                                    data.data.value,
+                                    "Temperature > 45" + "&degC" + ": " + data.data.value + "&degC",
+                                    3);
+                                    let notifEl = document.querySelector('.notification');
+                                    let txtEl = document.querySelector('.notification span');
+
+                                    document.body.removeChild(notifEl);
+                                    document.body.appendChild(notifEl);
+                                    notifEl.innerHTML = "Warning: Temperature > 45" + "\xB0" + ": " + data.data.value + "\xB0";
+                                    notifEl.style.paddingLeft = "90px";
+
+                                    
+                                  
+                                    
+                                    notifEl.style.animationName="notify";
+                                    notifEl.style.animationDuration = "3s";
+
+                                }
+                            }
+                            else console.log('failed request');
+                            
+                        }
+                },2000
+            );
         }
     }
-
+    
     showStatsLayer = function() {
         let layerNr = 5;
         if (graphicsLayerPolygons === null) {
@@ -664,6 +847,7 @@ require([
     let salFltr = document.getElementById("salinity");
     let thFltr = document.getElementById("th");
     let statsFltr = document.getElementById("stats");
+    let reportFltr = document.getElementById("reports");
 
 
     let legend1 = document.querySelector('.legend-micronutrients');
@@ -674,9 +858,44 @@ require([
 
     let locations  = document.querySelector('.navigator .locations');
     let charts = document.querySelector('.navigator .charts');
+
+    let mainL = document.querySelector('.toMainL');
+    
+    mainL.onclick = () => {
+        clearInterval(idInterval);
+        if (reportEvtLayer != null) {
+            map.layers.remove(reportEvtLayer);
+            reportEvtLayer = null;
+        }
+        if (graphicsLayerPolygons != null) {
+            map.layers.remove(graphicsLayerPolygons);
+            graphicsLayerPolygons = null;
+        }
+        if (graphicsLayerPoints != null) {
+            map.layers.remove(graphicsLayerPoints);
+            graphicsLayerPoints = null;
+        }
+
+        document.querySelector('#content').innerHTML = "";
+        document.querySelector('.filters span').textContent = "FILTERS";
+        document.querySelector('.filters').style.color = 'black';
+
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
+
+        legend1.style.display="block";
+        legend1.style.height = "0.2px";
+        legend2.style.display="none";
+        legend3.style.display="none";
+        legend4.style.display="none";
+        legend5.style.display="none";
+        
+    }
         
     nutrFltr.onclick = () => {
-        
+        clearInterval(idInterval);
         charts.style.color = 'black';
         charts.style.fontWeight="normal";
         locations.style.fontWeight = "bold";
@@ -690,6 +909,11 @@ require([
         icon.style.left = '-18px';
         map.layers.remove(graphicsLayerPolygons);
         graphicsLayerPolygons = null;
+
+        if (reportEvtLayer != null) {
+            map.layers.remove(reportEvtLayer);
+            reportEvtLayer = null;
+        }
         
         // showMicroNutrientLayer();
         document.querySelector('.layerList').classList.toggle("show");
@@ -707,7 +931,7 @@ require([
         legend1.style.paddingBottom = '20px';
     }
     micrOrgFltr.onclick = () => {
-
+        clearInterval(idInterval);
         charts.style.color = 'black';
         charts.style.fontWeight="normal";
         locations.style.fontWeight = "bold";
@@ -727,6 +951,10 @@ require([
             map.layers.remove(graphicsLayerPolygons);
             graphicsLayerPolygons = null;
         }
+        if (reportEvtLayer != null) {
+            map.layers.remove(reportEvtLayer);
+            reportEvtLayer = null;
+        }
 
         // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
@@ -742,7 +970,7 @@ require([
         legend2.style.paddingBottom="20px";
     }
     salFltr.onclick = () => {
-
+        clearInterval(idInterval);
         charts.style.color = 'black';
         charts.style.fontWeight="normal";
         locations.style.fontWeight = "bold";
@@ -762,6 +990,10 @@ require([
             map.layers.remove(graphicsLayerPolygons);
             graphicsLayerPolygons = null;
         }
+        if (reportEvtLayer != null) {
+            map.layers.remove(reportEvtLayer);
+            reportEvtLayer = null;
+        }
         // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
@@ -777,7 +1009,7 @@ require([
         legend3.style.paddingBottom="20px";
     }
     thFltr.onclick = () => {
-
+        clearInterval(idInterval);
 
         charts.style.color = 'black';
         charts.style.fontWeight="normal";
@@ -797,6 +1029,10 @@ require([
             map.layers.remove(graphicsLayerPolygons);
             graphicsLayerPolygons = null;
         }
+        if (reportEvtLayer != null) {
+            map.layers.remove(reportEvtLayer);
+            reportEvtLayer = null;
+        }
         // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
@@ -812,7 +1048,7 @@ require([
         legend4.style.paddingBottom="20px";
     }
     statsFltr.onclick = () => {
-
+        clearInterval(idInterval);
         charts.style.color = 'black';
         charts.style.fontWeight="normal";
         locations.style.fontWeight = "bold";
@@ -832,6 +1068,10 @@ require([
             map.layers.remove(graphicsLayerPolygons);
             graphicsLayerPolygons = null;
         }
+        if (reportEvtLayer != null) {
+            map.layers.remove(reportEvtLayer);
+            reportEvtLayer = null;
+        }
         // showPolygonLayer();
         document.querySelector('.layerList').classList.toggle("show");
 
@@ -846,6 +1086,41 @@ require([
         legend5.style.height="230px";
         legend5.style.paddingBottom="20px";
     }
+    reportFltr.onclick = () => {
+        clearInterval(idInterval);
+        charts.style.color = 'black';
+        charts.style.fontWeight="normal";
+        locations.style.fontWeight = "bold";
+        locations.style.color = '#419ADA';
+
+        let title = document.querySelector('.filters span');
+        document.querySelector('.filters').style.color='#419ADA';
+        let icon = document.querySelector('.filters i');
+        title.textContent = 'Statistics';
+        title.style.right = '22px';
+        icon.style.left = '-35px';
+
+
+        map.layers.remove(graphicsLayerPoints);
+        graphicsLayerPoints = null;
+        if (graphicsLayerPolygons != null) {
+            map.layers.remove(graphicsLayerPolygons);
+            graphicsLayerPolygons = null;
+        }
+        showReportEvtsLayer();
+        document.querySelector('.layerList').classList.toggle("show");
+
+
+        // display legend
+        legend1.style.display="block";
+        legend1.style.height = "0.5px";
+        legend2.style.display="none";
+        legend3.style.display="none";
+        legend4.style.display="none";
+        legend5.style.display="none";
+
+        document.querySelector('.filters span').textContent = "Incidents";
+    }
 
 
     // search widget 
@@ -853,24 +1128,43 @@ require([
         view: view
     });
 
+    // ----------------------------------------
+    function getRingData(polygon_idx,sensor_id){
+        console.log('+++++');
+        console.log( partsArr[sensor_id][polygon_idx]);
+        console.log('-----');
+        return partsArr[sensor_id][polygon_idx];
+
+
+    }
+
+    //--------------------
+
+    
     view.on("click",function(evt) {
-        search.clear();
-        view.popup.clear();
-        if (search.activeSource) {
-            let geocoder = search.activeSource.locator; // World geocode service
-            let params = {
-                location: evt.mapPoint
-            };
 
-            geocoder.locationToAddress(params)
-                .then(function(response) { // Show the address found
-                    let address = response.address;
-                    showPopup(address,evt.mapPoint);
-                },function(err) { // show no address found
-                    showPopup("No address found",evt.mapPoint);
+        if (reportEvtLayer == null
+            && graphicsLayerPolygons == null
+            && graphicsLayerPoints == null ) {
+            search.clear();
+            view.popup.clear();
+            if (search.activeSource) {
+                let geocoder = search.activeSource.locator; // World geocode service
+                let params = {
+                    location: evt.mapPoint
+                };
 
-                });
+                geocoder.locationToAddress(params)
+                    .then(function(response) { // Show the address found
+                        let address = response.address;
+                        showPopup(address,evt.mapPoint);
+                    },function(err) { // show no address found
+                        showPopup("No address found",evt.mapPoint);
+
+                    });
+            }
         }
+        
     });
 
     function showPopup(address,pt) {
@@ -882,4 +1176,5 @@ require([
     }
 
     
+
   });
